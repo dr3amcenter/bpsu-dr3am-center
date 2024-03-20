@@ -16,8 +16,7 @@
 	<title>Hataw Takbo Barangay</title>
 </svelte:head>
 
-<Toaster />
-
+<Toaster richColors />
 <slot />
 
 <style>
