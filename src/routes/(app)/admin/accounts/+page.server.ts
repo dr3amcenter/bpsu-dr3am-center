@@ -78,7 +78,7 @@ export const actions: Actions = {
 				if (user.fullName !== fullName) {
 					await tx
 						.update(userTable)
-						.set({ fullName, updateAt: new Date() })
+						.set({ fullName, updatedAt: new Date() })
 						.where(eq(userTable.id, id))
 						.execute();
 				}
@@ -91,7 +91,7 @@ export const actions: Actions = {
 							username,
 							hashed_password: hashedPassword,
 							fullName,
-							updateAt: new Date()
+							updatedAt: new Date()
 						})
 						.where(eq(userTable.id, id))
 						.execute();
@@ -139,7 +139,7 @@ export const actions: Actions = {
 			await db.transaction(async (tx) => {
 				await tx
 					.update(userTable)
-					.set({ isDeleted: true, updateAt: new Date() })
+					.set({ isDeleted: true, updatedAt: new Date() })
 					.where(eq(userTable.id, user.id))
 					.execute();
 
@@ -174,7 +174,7 @@ export const actions: Actions = {
 
 			await db
 				.update(userTable)
-				.set({ isDeleted: false, updateAt: new Date() })
+				.set({ isDeleted: false, updatedAt: new Date() })
 				.where(eq(userTable.id, user.id))
 				.execute();
 		} catch (e) {
