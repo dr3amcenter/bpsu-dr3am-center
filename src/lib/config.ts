@@ -5,7 +5,8 @@ import {
 	LayoutDashboardIcon,
 	UserRoundIcon,
 	WarehouseIcon,
-	TriangleAlertIcon
+	TriangleAlertIcon,
+	Settings2Icon
 } from "lucide-svelte";
 
 export type BaseLink = {
@@ -33,7 +34,17 @@ export const links: Record<
 				{ href: "/admin/accounts/deleted-account", label: "Deleted Account", icon: UserRoundIcon }
 			]
 		},
-
+		{
+			href: "/admin/settings",
+			label: "Setting",
+			icon: Settings2Icon,
+			sublinks: [
+				{ href: "/admin/settings/categories", label: "Category", icon: UserRoundIcon },
+				{ href: "/admin/settings/locations", label: "Location", icon: UserRoundIcon },
+				{ href: "/admin/settings/brands", label: "Brand", icon: UserRoundIcon },
+				{ href: "/admin/settings/classifications", label: "Classification", icon: UserRoundIcon }
+			]
+		},
 		{ href: "/admin/report", label: "Report", icon: TriangleAlertIcon }
 	],
 	user: [{ href: "/user/dashboard", label: "Dashboard", icon: LayoutDashboardIcon }]
