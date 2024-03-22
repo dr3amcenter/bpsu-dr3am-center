@@ -8,6 +8,7 @@
 	import Dr3amCenterLogoBig from "$lib/assets/img/d3am-logo-big.png";
 	import NavLink from "$lib/components/nav-link.svelte";
 	import ScannerDialog from "$lib/components/scannerDialog.svelte";
+	import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
 
 	export let data;
 
@@ -47,19 +48,19 @@
 				<MenuIcon />
 			</Button>
 
-			<div class="flex justify-center">
+			<div class="mb-12 flex justify-center">
 				<img src={Dr3amCenterLogoBig} alt="DR3AM Center Logo Big" class="w-40" />
 			</div>
 
-			<div class="mt-12">
+			<ScrollArea class="flex-1">
 				{#each activeLinks as link}
 					<NavLink href={link.href} label={link.label} sublinks={link.sublinks}>
 						<svelte:component this={link.icon} class="h-4 w-4" />
 					</NavLink>
 				{/each}
-			</div>
+			</ScrollArea>
 
-			<div class="mt-auto space-y-4 border-t py-4">
+			<div class="space-y-4 border-t py-4">
 				<a href="/app/profile" class="flex items-center gap-x-3">
 					<Avatar.Root>
 						<Avatar.Fallback><UserIcon /></Avatar.Fallback>
@@ -91,7 +92,7 @@
 		</Button>
 	</header> -->
 
-	<div class="py-10 sm:ml-64"><slot /></div>
+	<div class="py-10 sm:ml-64 sm:pb-24"><slot /></div>
 </div>
 
 <ScannerDialog />
