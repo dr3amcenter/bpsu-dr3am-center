@@ -21,7 +21,8 @@ export const userTable = pgTable("auth_user", {
 	fullName: text("full_name").notNull(),
 	role: roleEnum("role").notNull().default("user"),
 	isDeleted: boolean("is_deleted").notNull().default(false),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
+	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
+	updateAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
 });
 
 export const sessionTable = pgTable("session", {
@@ -62,21 +63,30 @@ export const equipmentTable = pgTable("equipment", {
 	}),
 	consumability: text("consumability").notNull(),
 	isDeleted: boolean("is_deleted").default(false),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
+	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
+	updateAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
 });
 
 export const categoryTable = pgTable("category", {
-	categoryName: text("category_name").primaryKey()
+	categoryName: text("category_name").primaryKey(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
+	updateAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
 });
 
 export const locationTable = pgTable("location", {
-	locationName: text("location_name").primaryKey()
+	locationName: text("location_name").primaryKey(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
+	updateAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
 });
 
 export const brandTable = pgTable("brand", {
-	brandName: text("brand_name").primaryKey()
+	brandName: text("brand_name").primaryKey(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
+	updateAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
 });
 
 export const classificationTable = pgTable("classification", {
-	classificationName: text("classification_name").primaryKey()
+	classificationName: text("classification_name").primaryKey(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
+	updateAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
 });
