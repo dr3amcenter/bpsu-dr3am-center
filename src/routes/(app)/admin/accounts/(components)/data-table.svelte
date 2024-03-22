@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createRender, createTable, Render, Subscribe } from "svelte-headless-table";
 	import { addPagination, addTableFilter } from "svelte-headless-table/plugins";
-	import { derived, readable, writable } from "svelte/store";
+	import { writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
 	import { format } from "date-fns";
 	import DataTableActions from "./data-table-actions.svelte";
@@ -72,10 +72,10 @@
 		<Table.Header>
 			{#each $headerRows as headerRow}
 				<Subscribe rowAttrs={headerRow.attrs()}>
-					<Table.Row class="bg-white">
+					<Table.Row>
 						{#each headerRow.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
-								<Table.Head {...attrs} class="text-primary">
+								<Table.Head {...attrs}>
 									<Render of={cell.render()} />
 								</Table.Head>
 							</Subscribe>
@@ -90,7 +90,7 @@
 					<Table.Row {...rowAttrs}>
 						{#each row.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs>
-								<Table.Cell {...attrs} class="bg-white py-6">
+								<Table.Cell {...attrs}>
 									<Render of={cell.render()} />
 								</Table.Cell>
 							</Subscribe>
