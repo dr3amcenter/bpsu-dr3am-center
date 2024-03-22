@@ -13,7 +13,7 @@
 			src: url("/Alexandria-VariableFont_wght.ttf"); /* IE9 Compat Modes */
 		}
 	</style>
-	<title>Hataw Takbo Barangay</title>
+	<title>BPSU DR3AM Center</title>
 </svelte:head>
 
 <Toaster richColors />
