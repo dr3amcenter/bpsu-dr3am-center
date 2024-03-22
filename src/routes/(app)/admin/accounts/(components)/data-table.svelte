@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createRender, createTable, Render, Subscribe } from "svelte-headless-table";
 	import { addPagination, addTableFilter } from "svelte-headless-table/plugins";
-	import { readable } from "svelte/store";
+	import { derived, readable, writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
 	import { format } from "date-fns";
 	import DataTableActions from "./data-table-actions.svelte";
@@ -12,7 +12,11 @@
 
 	export let searchInput = "";
 
-	const table = createTable(readable(data), {
+	const users = writable(data);
+
+	$: $users = data;
+
+	const table = createTable(users, {
 		page: addPagination(),
 		filter: addTableFilter({
 			fn: ({ filterValue, value }) => value.toLowerCase().includes(filterValue.toLowerCase())

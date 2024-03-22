@@ -44,14 +44,16 @@
 			<Dialog.Title>Delete Account "{username}"?</Dialog.Title>
 		</Dialog.Header>
 		<form action="/admin/accounts/?/deleteAccount" method="POST" use:enhance class="space-y-4">
-			<Form.Field {form} name="username" class="hidden">
+			<Form.Field {form} name="username">
 				<Form.Control let:attrs>
-					<Input {...attrs} bind:value={username} />
+					<Input {...attrs} type="hidden" bind:value={$formData.username} />
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
 			<div class="grid grid-cols-2 gap-x-2">
-				<Button disabled={$submitting} variant="outline">Cancel</Button>
+				<Button disabled={$submitting} variant="outline" on:click={() => (open = false)}
+					>Cancel</Button
+				>
 				<Form.Button disabled={$submitting}>
 					{#if $submitting}
 						<LoaderCircleIcon class="h-5 w-5 animate-spin" />

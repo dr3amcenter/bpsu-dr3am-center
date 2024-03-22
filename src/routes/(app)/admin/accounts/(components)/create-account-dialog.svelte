@@ -69,7 +69,9 @@
 			</Form.Field>
 			<Form.Errors errors={$errors._errors} />
 			<div class="grid grid-cols-2 gap-x-2">
-				<Button disabled={$submitting} variant="outline">Cancel</Button>
+				<Button disabled={$submitting} variant="outline" on:click={() => (open = false)}
+					>Cancel</Button
+				>
 				<Form.Button disabled={$submitting}>
 					{#if $submitting}
 						<LoaderCircleIcon class="h-5 w-5 animate-spin" />

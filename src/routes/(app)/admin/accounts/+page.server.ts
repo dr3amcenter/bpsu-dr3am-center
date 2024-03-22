@@ -113,6 +113,7 @@ export const actions: Actions = {
 	},
 	deleteAccount: async (event) => {
 		const form = await superValidate(event, zod(deleteAccountSchema));
+
 		if (!form.valid) {
 			return fail(400, {
 				form
@@ -137,7 +138,7 @@ export const actions: Actions = {
 					.where(eq(userTable.id, user.id))
 					.execute();
 
-				await tx.delete(sessionTable).where(eq(userTable.id, user.id)).execute();
+				await tx.delete(sessionTable).where(eq(sessionTable.userId, user.id)).execute();
 			});
 		} catch (e) {
 			return setError(form, "", "Unable to delete account");
