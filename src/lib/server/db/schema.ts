@@ -64,7 +64,8 @@ export const equipmentTable = pgTable("equipment", {
 	consumability: text("consumability").notNull(),
 	isDeleted: boolean("is_deleted").default(false),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
-	updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).defaultNow().notNull()
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
+	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: "date" })
 });
 
 export const categoryTable = pgTable("category", {
