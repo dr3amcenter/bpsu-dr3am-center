@@ -6,7 +6,8 @@
 	import { zodClient } from "sveltekit-superforms/adapters";
 
 	import Dr3amLogo from "$lib/assets/img/dr3am-logo.png";
-	import Dr3amLogoBig from "$lib/assets/img/d3am-logo-big.png";
+	import Dr3amLogoBig from "$lib/assets/img/dr3am-logo-big.webp";
+	import Dr3amLogoBigWhite from "$lib/assets/img/dr3am-logo-big-white.webp";
 
 	export let data;
 
@@ -17,8 +18,15 @@
 	const { form: formData, enhance, errors } = form;
 </script>
 
-<main class="flex h-screen">
-	<div class="col-span-2 flex h-full w-full flex-col px-4 py-8 md:px-16 lg:w-[550px]">
+<main class="container flex h-screen flex-col items-center">
+	<!-- <div class="relative hidden flex-1 bg-primary lg:block">
+		<img
+			src={Dr3amLogoBigWhite}
+			alt="DR3AM Center Logo Big White"
+			class="absolute left-10 top-10 w-[200px]"
+		/>
+	</div> -->
+	<div class="col-span-2 flex h-full w-full flex-col py-8 lg:w-[640px]">
 		<div class="mb-40 hidden items-center gap-x-6 lg:flex">
 			<img src={Dr3amLogo} alt="DR3AM Center Logo" class="w-12" />
 			<h1 class="text-3xl font-bold">BPSU DR3AM Center</h1>
@@ -49,5 +57,4 @@
 			</form>
 		</div>
 	</div>
-	<div class="hidden flex-1 bg-gray-500 lg:block"></div>
 </main>
