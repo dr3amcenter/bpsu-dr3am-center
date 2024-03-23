@@ -5,7 +5,7 @@
 	import * as Avatar from "$lib/components/ui/avatar";
 	import { page } from "$app/stores";
 	import { links } from "$lib/config";
-	import Dr3amCenterLogoBig from "$lib/assets/img/d3am-logo-big.png";
+	import Dr3amCenterLogoBig from "$lib/assets/img/dr3am-logo-big.webp";
 	import NavLink from "$lib/components/nav-link.svelte";
 	import ScannerDialog from "$lib/components/scannerDialog.svelte";
 	import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
@@ -61,7 +61,7 @@
 			</ScrollArea>
 
 			<div class="space-y-4 border-t py-4">
-				<a href="/app/profile" class="flex items-center gap-x-3">
+				<div class="flex items-center gap-x-3">
 					<Avatar.Root>
 						<Avatar.Fallback><UserIcon /></Avatar.Fallback>
 					</Avatar.Root>
@@ -69,7 +69,7 @@
 						<div class="text-xs">John Carlo Asilo</div>
 						<div class="text-xs uppercase text-gray-500">Admin</div>
 					</div>
-				</a>
+				</div>
 
 				<form method="post" action="/logout">
 					<input type="hidden" />
