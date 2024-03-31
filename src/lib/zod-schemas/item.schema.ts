@@ -54,7 +54,7 @@ export const addIncomingItemSchema = z.object({
 	quantity: z
 		.string()
 		.default("0")
-		.refine((v) => Number(v) >= 0, { message: "Please enter a positive number" })
+		.refine((v) => Number(v) > 0, { message: "Please enter a positive number" })
 });
 
 export const addOutgoingItemSchema = z.object({
@@ -62,7 +62,7 @@ export const addOutgoingItemSchema = z.object({
 	quantity: z
 		.string()
 		.default("0")
-		.refine((v) => Number(v) >= 0, { message: "Please enter a positive number" })
+		.refine((v) => Number(v) > 0, { message: "Please enter a positive number" })
 });
 
 export const findItemSchema = z.object({
