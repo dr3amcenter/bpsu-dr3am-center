@@ -37,7 +37,7 @@ export const load: PageServerLoad = async ({ params }) => {
 				requester: true,
 				equipment: true
 			},
-			orderBy: (transaction, { desc }) => desc(transaction.updatedAt)
+			orderBy: (transaction, { asc }) => asc(transaction.updatedAt)
 		}),
 		addIncomingItemForm: await superValidate(zod(addIncomingItemSchema)),
 		addOutgoingItemForm: await superValidate(zod(addOutgoingItemSchema))
