@@ -25,7 +25,7 @@
 			if (!event.form.valid) {
 				return;
 			}
-			toast.success("Equipment has been added");
+			toast.success("Item has been added");
 		}
 	});
 
@@ -78,7 +78,7 @@
 	action="?/createItem"
 	method="POST"
 	use:enhance
-	class="grid grid-cols-12 gap-x-8 gap-y-4 sm:gap-y-6"
+	class="grid grid-cols-12 gap-y-6 bg-white p-4 sm:gap-x-8"
 >
 	<h4 class="col-span-12 tracking-wider">PRIMARY DETAILS</h4>
 	<Separator class="col-span-12" />
@@ -344,11 +344,10 @@
 	<Form.Field {form} name="code" class="col-span-12 md:col-span-6 lg:col-span-4">
 		<Form.Control let:attrs>
 			<Form.Label>Item Code</Form.Label>
-			<Input {...attrs} bind:value={$formData.code} />
+			<Input {...attrs} bind:value={$formData.code} class="" />
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
-
 	<Form.Field {form} name="controlNumber" class="col-span-12 md:col-span-6 lg:col-span-4">
 		<Form.Control let:attrs>
 			<Form.Label>Control Number</Form.Label>
@@ -371,6 +370,6 @@
 
 	<div class="col-span-12 grid grid-cols-2 gap-x-2 md:flex">
 		<Button href="/admin/inventory" variant="outline">Back</Button>
-		<Form.Button>Add Equipment</Form.Button>
+		<Form.Button>Submit</Form.Button>
 	</div>
 </form>
