@@ -1,6 +1,6 @@
 import { setError, superValidate } from "sveltekit-superforms";
 import type { PageServerLoad, Actions } from "./$types";
-import { loginSchema } from "$lib/zod-schemas";
+import { loginSchema } from "$lib/zod-schemas/auth.schema";
 
 import { zod } from "sveltekit-superforms/adapters";
 import { fail, redirect } from "@sveltejs/kit";
@@ -56,6 +56,12 @@ export const actions: Actions = {
 			...sessionCookie.attributes
 		});
 
-		redirect(302, `/${existingUser.role}/dashboard`);
+		if (existingUser.role === "admin") {
+			redirect(302, "/admin/dashboard");
+		}
+
+		if (existingUser.role === "user") {
+			redirect(302, "/user/inventory");
+		}
 	}
 };

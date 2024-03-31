@@ -1,20 +1,21 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
 	import Button from "$lib/components/ui/button/button.svelte";
-	import { LogOutIcon, MenuIcon, ScanIcon, UserIcon } from "lucide-svelte";
+	import { LogOutIcon, MenuIcon, UserIcon } from "lucide-svelte";
 	import * as Avatar from "$lib/components/ui/avatar";
 	import { page } from "$app/stores";
 	import { links } from "$lib/config";
 	import Dr3amCenterLogoBig from "$lib/assets/img/dr3am-logo-big.webp";
 	import NavLink from "$lib/components/nav-link.svelte";
-	import ScannerDialog from "$lib/components/scannerDialog.svelte";
+	import ScannerDialog from "$lib/components/scanner-dialog.svelte";
 	import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
+	import Dr3amLogo from "$lib/assets/img/dr3am-logo.png";
 
 	export let data;
 
 	let sidebarOpen = false;
 
-	$: role = data.user.role;
+	$: role = data.user!.role;
 
 	$: activeLinks = role ? links[role] : [];
 
@@ -34,7 +35,7 @@
 
 	<aside
 		class={cn(
-			"fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full bg-white transition-transform dark:border-gray-700 dark:bg-gray-800 sm:translate-x-0",
+			"fixed left-0 top-0 z-50 h-screen w-64 -translate-x-full bg-white transition-transform dark:border-gray-700 dark:bg-gray-800 md:translate-x-0",
 			sidebarOpen ? "translate-x-0" : "-translate-x-full"
 		)}
 	>
@@ -42,7 +43,7 @@
 			<Button
 				variant="ghost"
 				size="icon"
-				class="sm:hidden"
+				class="md:hidden"
 				on:click={() => (sidebarOpen = !sidebarOpen)}
 			>
 				<MenuIcon />
@@ -86,13 +87,17 @@
 		</div>
 	</aside>
 
-	<!-- <header class="flex h-20 items-center justify-between bg-white px-2 py-4 sm:ml-64 xl:px-4">
+	<header
+		class="fixed flex h-20 w-full items-center justify-between bg-white px-6 py-4 md:ml-64 md:hidden xl:px-4"
+	>
+		<img src={Dr3amLogo} alt="DR3AM Center Logo" class="w-12" />
+
 		<Button variant="ghost" class="sm:hidden" on:click={() => (sidebarOpen = !sidebarOpen)}>
 			<MenuIcon />
 		</Button>
-	</header> -->
+	</header>
 
-	<div class="py-10 sm:ml-64 sm:pb-24"><slot /></div>
+	<div class="pb-20 pt-32 md:ml-64 md:mt-20 md:pb-24 md:pt-0"><slot /></div>
 </div>
 
 <ScannerDialog />

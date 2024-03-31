@@ -1,9 +1,9 @@
 <script lang="ts">
-	import DataTable from "./data-table.svelte";
+	import ItemDataTable from "./(components)/item-data-table.svelte";
 
 	export let data;
 </script>
 
 <main class="container">
-	<DataTable data={data.equipments} />
+	<ItemDataTable data={data.equipments} />
 </main>

@@ -1,9 +1,9 @@
 <script>
 	import { Input } from "$lib/components/ui/input";
 	import Title from "$lib/components/title.svelte";
-	import DataTable from "./(components)/data-table.svelte";
+	import ClassificationDataTable from "./(components)/classification-data-table.svelte";
 
-	import NewClassificationsDialog from "./(components)/new-classifications-dialog.svelte";
+	import ClassificationCreateDialog from "./(components)/classification-create-dialog.svelte";
 
 	export let data;
 
@@ -24,10 +24,10 @@
 				bind:value={searchInput}
 			/>
 			<div class="ml-auto">
-				<NewClassificationsDialog theForm={data.newClassificationsForm} />
+				<ClassificationCreateDialog theForm={data.newClassificationsForm} />
 			</div>
 		</div>
 	</div>
 
-	<DataTable data={data.classifications} bind:searchInput />
+	<ClassificationDataTable data={data.classifications} bind:searchInput />
 </main>

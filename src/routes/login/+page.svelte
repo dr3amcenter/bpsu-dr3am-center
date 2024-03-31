@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Form from "$lib/components/ui/form";
 	import { Input } from "$lib/components/ui/input";
-	import { loginSchema, type LoginSchema } from "$lib/zod-schemas";
+	import { loginSchema } from "$lib/zod-schemas/auth.schema";
 	import { superForm } from "sveltekit-superforms";
 	import { zodClient } from "sveltekit-superforms/adapters";
 

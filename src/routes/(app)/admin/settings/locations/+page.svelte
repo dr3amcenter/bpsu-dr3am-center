@@ -1,9 +1,9 @@
 <script>
 	import { Input } from "$lib/components/ui/input";
 	import Title from "$lib/components/title.svelte";
-	import DataTable from "./(components)/data-table.svelte";
+	import LocationDataTable from "./(components)/location-data-table.svelte";
 
-	import NewLocationsDialog from "./(components)/new-locations-dialog.svelte";
+	import LocationCreateDialog from "./(components)/location-create-dialog.svelte";
 
 	export let data;
 
@@ -24,10 +24,10 @@
 				bind:value={searchInput}
 			/>
 			<div class="ml-auto">
-				<NewLocationsDialog theForm={data.newLocationsForm} />
+				<LocationCreateDialog theForm={data.createLocationsForm} />
 			</div>
 		</div>
 	</div>
 
-	<DataTable data={data.locations} bind:searchInput />
+	<LocationDataTable data={data.locations} bind:searchInput />
 </main>

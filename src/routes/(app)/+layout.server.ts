@@ -1,14 +1,12 @@
-import { redirect } from "@sveltejs/kit";
+import { findItemSchema } from "$lib/zod-schemas/item.schema";
+import { superValidate } from "sveltekit-superforms";
+import { zod } from "sveltekit-superforms/adapters";
+
 import type { LayoutServerLoad } from "./$types";
 
 export const load: LayoutServerLoad = async (event) => {
-	await event.parent();
-
-	if (!event.locals.user) {
-		redirect(303, "/login");
-	}
-
 	return {
-		user: event.locals.user
+		user: event.locals.user,
+		findItemForm: await superValidate(zod(findItemSchema))
 	};
 };

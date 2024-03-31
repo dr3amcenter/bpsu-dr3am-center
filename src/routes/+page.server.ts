@@ -1,4 +1,5 @@
-import type { PageServerLoad } from "./$types";
+import { findItemAction } from "$lib/server/item";
+import type { Actions, PageServerLoad } from "./$types";
 
 import { redirect } from "@sveltejs/kit";
 
@@ -14,4 +15,8 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	redirect(302, "/login");
+};
+
+export const actions: Actions = {
+	findItem: findItemAction
 };

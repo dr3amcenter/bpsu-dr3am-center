@@ -1,9 +1,9 @@
 <script>
 	import { Input } from "$lib/components/ui/input";
 	import Title from "$lib/components/title.svelte";
-	import DataTable from "./(components)/data-table.svelte";
+	import DataTable from "./(components)/category-data-table.svelte";
 
-	import NewCategoriesDialog from "./(components)/new-categories-dialog.svelte";
+	import CreateCategoryDialog from "./(components)/category-create-dialog.svelte";
 
 	export let data;
 
@@ -24,7 +24,7 @@
 				bind:value={searchInput}
 			/>
 			<div class="ml-auto">
-				<NewCategoriesDialog theForm={data.newCategoriesForm} />
+				<CreateCategoryDialog theForm={data.createCategoriesForm} />
 			</div>
 		</div>
 	</div>
