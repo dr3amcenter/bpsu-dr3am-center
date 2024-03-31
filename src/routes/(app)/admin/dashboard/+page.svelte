@@ -156,7 +156,7 @@
 			<h3>Inventory Details</h3>
 			<div class="space-y-5">
 				<div class="flex items-center justify-between">
-					<div class="text-xs font-light text-gray-500">Expired Items</div>
+					<div class="text-xs font-light text-gray-500">Low Stock Items</div>
 					<div class="text-lg font-semibold">20</div>
 				</div>
 				<Separator class="h-[.5px]" />
