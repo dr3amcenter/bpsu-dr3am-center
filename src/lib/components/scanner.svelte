@@ -23,6 +23,7 @@
 		id: `find-item-form`,
 		resetForm: false,
 		onUpdate(event) {
+			console.log("OYYY");
 			if (!event.form.valid) {
 				if (event.form.errors._errors) {
 					toast.error(event.form.errors._errors[0], {
