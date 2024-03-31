@@ -26,10 +26,16 @@ export async function findItemAction(event: RequestEvent) {
 
 	const { itemId } = form.data;
 
+	const item = await db.query.equipmentTable.findFirst({
+		where: (equipment, { eq }) => eq(equipment.id, itemId)
+	});
+
+	if (!item) {
+		return setError(form, "", "Item not found");
+	}
+
 	return {
-		form,
-		itemName: "hey",
-		itemId
+		form
 	};
 }
 
