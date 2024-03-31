@@ -39,7 +39,7 @@
 			sidebarOpen ? "translate-x-0" : "-translate-x-full"
 		)}
 	>
-		<div class="flex h-full flex-col px-3 py-6">
+		<div class="flex h-full flex-col px-3 pb-14 pt-6">
 			<Button
 				variant="ghost"
 				size="icon"

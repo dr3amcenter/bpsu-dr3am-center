@@ -7,6 +7,7 @@
 
 	import Dr3amLogo from "$lib/assets/img/dr3am-logo.png";
 	import Dr3amLogoBig from "$lib/assets/img/dr3am-logo-big.webp";
+	import { LoaderCircleIcon } from "lucide-svelte";
 
 	export let data;
 
@@ -14,7 +15,7 @@
 		validators: zodClient(loginSchema)
 	});
 
-	const { form: formData, enhance, errors } = form;
+	const { form: formData, enhance, errors, submitting } = form;
 </script>
 
 <main class="container flex h-screen flex-col items-center">
@@ -45,7 +46,13 @@
 					<Form.FieldErrors />
 				</Form.Field>
 				<Form.Errors errors={$errors._errors} />
-				<Form.Button class="w-full">Submit</Form.Button>
+				<Form.Button class="w-full" disabled={$submitting}>
+					{#if $submitting}
+						<LoaderCircleIcon class="h-5 w-5 animate-spin" />
+					{:else}
+						Submit
+					{/if}
+				</Form.Button>
 			</form>
 		</div>
 	</div>

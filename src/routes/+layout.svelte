@@ -2,6 +2,8 @@
 	import "../app.pcss";
 
 	import { Toaster } from "$lib/components/ui/sonner";
+
+	import { navigating } from "$app/stores";
 </script>
 
 <svelte:head>
@@ -15,6 +17,12 @@
 	</style>
 	<title>BPSU DR3AM Center</title>
 </svelte:head>
+
+{#if $navigating}
+	<div class="fixed inset-0 z-[999] flex items-center justify-center bg-black/80">
+		<img src="/favicon.png" class="w-24 animate-pulse" alt="BPSU Dr3am Center Logo" />
+	</div>
+{/if}
 
 <Toaster richColors />
 <slot />
