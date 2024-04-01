@@ -8,6 +8,7 @@
 	import QrCode from "$lib/components/qr-code.svelte";
 
 	import { getFrequency } from "$lib/utils";
+	import { format } from "date-fns";
 
 	export let equipment: Equipment;
 
@@ -38,7 +39,9 @@
 	</div>
 
 	<div class="col-span-4 text-gray-400 lg:col-span-2">Expiry Date</div>
-	<div class="col-span-6 text-gray-800 lg:col-span-3">{equipment.expiryDate || emptyIndicator}</div>
+	<div class="col-span-6 text-gray-800 lg:col-span-3">
+		{equipment.expiryDate ? format(equipment.expiryDate, "MM-dd-yyyy") : emptyIndicator}
+	</div>
 
 	<div class="col-span-4 text-gray-400 lg:col-span-2">Specification</div>
 	<div class="col-span-6 text-gray-800 lg:col-span-3">
@@ -51,7 +54,9 @@
 		<h4 class="col-span-5 tracking-widest">PURCHASE DETAILS</h4>
 
 		<div class="col-span-2 text-gray-400">Date Acquired</div>
-		<div class="col-span-3 text-gray-800">{equipment.dateAcquired || emptyIndicator}</div>
+		<div class="col-span-3 text-gray-800">
+			{equipment.dateAcquired ? format(equipment.dateAcquired, "MM-dd-yyyy") : emptyIndicator}
+		</div>
 
 		<div class="col-span-2 text-gray-400">Cost</div>
 		<div class="col-span-3 text-gray-800">₱ {equipment.acquisitionCost}</div>
