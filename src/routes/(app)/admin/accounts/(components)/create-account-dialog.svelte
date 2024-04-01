@@ -34,7 +34,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Trigger class={buttonVariants()}>Add {role}</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants()}>Add</Dialog.Trigger>
 	<Dialog.Content>
 		<Dialog.Header>
 			<Dialog.Title>Create a new {role}</Dialog.Title>
