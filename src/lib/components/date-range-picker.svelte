@@ -16,7 +16,7 @@
 		dateStyle: "medium"
 	});
 
-	let value: DateRange | undefined;
+	export let value: DateRange | undefined;
 
 	let startValue: DateValue | undefined = undefined;
 </script>

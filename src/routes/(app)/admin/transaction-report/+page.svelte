@@ -5,8 +5,18 @@
 
 	import { format } from "date-fns";
 	import DateRangePicker from "$lib/components/date-range-picker.svelte";
+	import type { DateRange } from "bits-ui";
+	import { DateFormatter } from "@internationalized/date";
+	import { page } from "$app/stores";
+	import { goto } from "$app/navigation";
 
 	export let data;
+
+	const df = new DateFormatter("en-US", {
+		dateStyle: "medium"
+	});
+
+	let value: DateRange | undefined;
 
 	$: exportData = data.transactions.map((t) => {
 		const { equipment } = t;
@@ -21,6 +31,20 @@
 			date: format(t.updatedAt, "MM-dd-yyyy")
 		};
 	});
+
+	$: {
+		if (value) {
+			if (value.start && value.end) {
+				const url = $page.url.pathname;
+				const params = new URLSearchParams();
+
+				params.append("startDate", value.start.toString());
+				params.append("endDate", value.end.toString());
+
+				goto(`${url}?${params}`, { replaceState: true });
+			}
+		}
+	}
 </script>
 
 <Title title="Transaction Report" />
@@ -31,7 +55,7 @@
 			class="flex flex-col-reverse justify-end gap-x-3 gap-y-2 sm:flex-row sm:items-center sm:justify-between"
 		>
 			<div class="flex-1">
-				<DateRangePicker />
+				<DateRangePicker bind:value />
 			</div>
 
 			<div class="flex">
