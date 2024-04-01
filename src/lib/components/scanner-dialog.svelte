@@ -4,19 +4,9 @@
 	import * as Dialog from "$lib/components/ui/dialog";
 	import { cn } from "$lib/utils";
 	import Scanner from "./scanner.svelte";
-	import Button from "$lib/components/ui/button/button.svelte";
 
 	export let open = false;
 </script>
-
-{#if open}
-	<Button
-		class="fixed bottom-5 right-5 z-[100] h-14 w-14 rounded-full border-2 border-primary bg-white fill-primary text-primary shadow-md hover:fill-primary-foreground hover:text-primary-foreground"
-		on:click={() => (open = !open)}
-	>
-		<XIcon />
-	</Button>
-{/if}
 
 <Dialog.Root bind:open>
 	<Dialog.Trigger
