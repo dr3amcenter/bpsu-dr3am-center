@@ -21,7 +21,7 @@
 
 	const form = superForm(theForm, {
 		validators: zodClient(editBrandSchema),
-		id: `delete-form-${brandName}`,
+		id: `edit-brand-form-${brandName}`,
 		onUpdate(event) {
 			if (!event.form.valid) {
 				return;

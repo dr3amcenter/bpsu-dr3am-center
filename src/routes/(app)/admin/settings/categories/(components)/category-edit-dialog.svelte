@@ -22,7 +22,7 @@
 
 	const form = superForm(theForm, {
 		validators: zodClient(editCategorySchema),
-		id: `delete-form-${categoryName}`,
+		id: `edit-category-form-${categoryName}`,
 		onUpdate(event) {
 			if (!event.form.valid) {
 				return;

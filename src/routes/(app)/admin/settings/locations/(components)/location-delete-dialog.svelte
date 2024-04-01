@@ -22,7 +22,7 @@
 
 	const form = superForm(theForm, {
 		validators: zodClient(deleteLocationSchema),
-		id: `delete-form-${locationName}`,
+		id: `delete-location-form-${locationName}`,
 		onUpdate(event) {
 			if (!event.form.valid) {
 				return;
