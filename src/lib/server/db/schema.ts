@@ -1,8 +1,8 @@
 import { relations, type InferSelectModel } from "drizzle-orm";
 import {
 	boolean,
+	decimal,
 	integer,
-	numeric,
 	pgEnum,
 	pgTable,
 	text,
@@ -65,15 +65,11 @@ export const equipmentTable = pgTable("equipment", {
 	location: text("location").notNull(),
 	brand: text("brand"),
 	dateAcquired: timestamp("date_acquired", { withTimezone: true, mode: "date" }),
-	acquisitionCost: numeric("acquisition_cost", {
-		precision: 2
-	}),
+	acquisitionCost: decimal("acquisition_cost"),
 	serialNumber: text("serial_number"),
 	controlNumber: text("control_number"),
 	maintenanceInMonths: integer("maintenance_in_months"),
-	maintenanceCost: numeric("maintenance_cost", {
-		precision: 2
-	}),
+	maintenanceCost: decimal("maintenance_cost"),
 	consumability: text("consumability").notNull(),
 	isDeleted: boolean("is_deleted").default(false),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: "date" }).defaultNow().notNull(),
@@ -85,7 +81,9 @@ export const transactionTable = pgTable("transaction", {
 	id: uuid("id").defaultRandom().primaryKey(),
 	equipmentId: uuid("equipment_id")
 		.notNull()
-		.references(() => equipmentTable.id),
+		.references(() => equipmentTable.id, {
+			onDelete: "cascade"
+		}),
 	quantity: integer("quantity").notNull(),
 	status: transactionStatusEnum("status").notNull().default("pending"),
 	type: transactionTypeEnum("type").notNull().default("incoming"),

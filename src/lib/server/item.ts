@@ -58,6 +58,7 @@ export async function editItemAction(event: RequestEvent) {
 
 	const data = form.data;
 
+	console.log(data.maintenanceCost);
 	try {
 		await db
 			.update(equipmentTable)
@@ -81,8 +82,8 @@ export async function editItemAction(event: RequestEvent) {
 				acquisitionCost: data.acquisitionCost,
 				serialNumber: data.serialNumber,
 				controlNumber: data.controlNumber,
-				maintenanceCost: String(parseFloat(data.maintenanceCost)),
-				maintenanceInMonths: parseFloat(data.maintenanceInMonths),
+				maintenanceCost: data.maintenanceCost,
+				maintenanceInMonths: Number(data.maintenanceInMonths),
 				updatedAt: new Date()
 			})
 			.where(eq(equipmentTable.id, event.params.id!));
@@ -128,8 +129,8 @@ export async function createItemAction(event: RequestEvent) {
 			acquisitionCost: data.acquisitionCost,
 			serialNumber: data.serialNumber,
 			controlNumber: data.controlNumber,
-			maintenanceCost: String(parseFloat(data.maintenanceCost)),
-			maintenanceInMonths: parseFloat(data.maintenanceInMonths)
+			maintenanceCost: data.maintenanceCost,
+			maintenanceInMonths: Number(data.maintenanceInMonths)
 		});
 	} catch (e) {
 		return setError(form, "", "Unable to create new item");
