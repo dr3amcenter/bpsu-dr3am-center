@@ -284,6 +284,14 @@ export async function approveItemAction(event: RequestEvent) {
 		return setError(form, "", "Request already declined");
 	}
 
+	if (transaction.equipment.isDeleted) {
+		return setError(form, "", "Item is already deleted");
+	}
+
+	if (transaction.equipment.availability !== "Available") {
+		return setError(form, "", "Item currently not available");
+	}
+
 	const newOnHand = transaction.equipment.onHand - transaction.quantity;
 	const newOutgoing = transaction.equipment.outgoing + transaction.quantity;
 
