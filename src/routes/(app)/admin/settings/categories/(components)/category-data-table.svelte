@@ -85,7 +85,7 @@
 		<Table.Header>
 			{#each $headerRows as headerRow}
 				<Subscribe rowAttrs={headerRow.attrs()}>
-					<Table.Row>
+					<Table.Row class="border-none">
 						{#each headerRow.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
 								<Table.Head {...attrs}>

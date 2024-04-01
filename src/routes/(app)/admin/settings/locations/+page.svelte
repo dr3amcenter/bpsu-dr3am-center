@@ -12,11 +12,9 @@
 
 <Title title="Locations" />
 
-<main class="container space-y-6">
-	<div class="mb-6 space-y-6">
-		<div
-			class="ml-auto flex items-center gap-x-3 rounded-sm border border-primary bg-white p-6 shadow-sm"
-		>
+<main class="container">
+	<div class="space-y-6 bg-white p-6">
+		<div class="flex items-center gap-x-3">
 			<Input
 				class="max-w-xs rounded-sm border-0 bg-gray-100 px-4 py-6 text-gray-500"
 				placeholder="Search"
@@ -27,7 +25,6 @@
 				<LocationCreateDialog theForm={data.createLocationsForm} />
 			</div>
 		</div>
+		<LocationDataTable data={data.locations} bind:searchInput />
 	</div>
-
-	<LocationDataTable data={data.locations} bind:searchInput />
 </main>
