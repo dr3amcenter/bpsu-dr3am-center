@@ -8,5 +8,7 @@
 <Title title="Outgoing Request" />
 
 <main class="container">
-	<RequestsDataTable data={data.transactions} />
+	<div class="bg-white p-6">
+		<RequestsDataTable data={data.transactions} />
+	</div>
 </main>

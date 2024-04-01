@@ -78,7 +78,7 @@
 		<Table.Header>
 			{#each $headerRows as headerRow}
 				<Subscribe rowAttrs={headerRow.attrs()}>
-					<Table.Row class="bg-white">
+					<Table.Row class="border-none">
 						{#each headerRow.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
 								<Table.Head {...attrs} class="text-primary">
@@ -96,7 +96,7 @@
 					<Table.Row {...rowAttrs}>
 						{#each row.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs>
-								<Table.Cell {...attrs} class="bg-white py-6">
+								<Table.Cell {...attrs} class="py-6">
 									<Render of={cell.render()} />
 								</Table.Cell>
 							</Subscribe>
@@ -108,7 +108,7 @@
 	</Table.Root>
 
 	{#if data.length === 0}
-		<div class="flex h-20 items-center justify-center bg-white">No data</div>
+		<div class="flex h-20 items-center justify-center">No data</div>
 	{/if}
 
 	{#if !hidePagination}

@@ -26,9 +26,9 @@
 <Title title="Transaction Report" />
 
 <main class="container">
-	<div class="mb-6 space-y-6">
+	<div class="space-y-6 bg-white p-6">
 		<div
-			class="flex flex-col-reverse justify-end gap-x-3 gap-y-2 rounded-sm border border-primary bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+			class="flex flex-col-reverse justify-end gap-x-3 gap-y-2 sm:flex-row sm:items-center sm:justify-between"
 		>
 			<div class="flex-1">
 				<DateRangePicker />
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<TransactionsDataTable data={data.transactions} />
+		<TransactionsDataTable data={data.transactions} />
+	</div>
 </main>

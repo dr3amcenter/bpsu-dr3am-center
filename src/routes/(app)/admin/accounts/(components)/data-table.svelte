@@ -72,7 +72,7 @@
 		<Table.Header>
 			{#each $headerRows as headerRow}
 				<Subscribe rowAttrs={headerRow.attrs()}>
-					<Table.Row>
+					<Table.Row class="border-none">
 						{#each headerRow.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
 								<Table.Head {...attrs}>
@@ -102,7 +102,7 @@
 	</Table.Root>
 
 	{#if data.length === 0}
-		<div class="flex h-20 items-center justify-center bg-white">No data</div>
+		<div class="flex h-20 items-center justify-center">No data</div>
 	{/if}
 
 	<div class="flex items-center justify-end space-x-4 py-4">

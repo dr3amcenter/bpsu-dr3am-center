@@ -112,11 +112,9 @@
 	const { filterValue } = pluginStates.filter;
 </script>
 
-<div>
+<div class="bg-white p-6">
 	<div class="mb-6 space-y-6">
-		<div
-			class="ml-auto flex items-center gap-x-3 rounded-sm border border-primary bg-white p-6 shadow-sm"
-		>
+		<div class="flex items-center gap-x-3">
 			<Input
 				class="max-w-xs rounded-sm border-0 bg-gray-100 px-4 py-6 text-gray-500"
 				placeholder="Search"
@@ -130,7 +128,7 @@
 		<Table.Header>
 			{#each $headerRows as headerRow}
 				<Subscribe rowAttrs={headerRow.attrs()}>
-					<Table.Row class="bg-white">
+					<Table.Row class="border-none">
 						{#each headerRow.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
 								<Table.Head {...attrs} class="text-primary">
@@ -148,7 +146,7 @@
 					<Table.Row {...rowAttrs}>
 						{#each row.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs>
-								<Table.Cell {...attrs} class="bg-white py-6">
+								<Table.Cell {...attrs} class="py-6">
 									<Render of={cell.render()} />
 								</Table.Cell>
 							</Subscribe>
