@@ -39,7 +39,7 @@
 
 <Dialog.Root bind:open>
 	<Dialog.Trigger class={buttonVariants({ variant: "ghost", size: "icon" })}>
-		<SquarePenIcon class="h-5 w-5" />
+		<SquarePenIcon class="h-4 w-4" />
 	</Dialog.Trigger>
 	<Dialog.Content>
 		<Dialog.Header>

@@ -123,7 +123,7 @@
 				type="text"
 				bind:value={$filterValue}
 			/>
-			<Button href="/admin/inventory/new" size="sm" class="ml-auto">Add Equipment</Button>
+			<Button href="/admin/inventory/new" size="sm" class="ml-auto">Add</Button>
 		</div>
 	</div>
 	<Table.Root {...$tableAttrs}>

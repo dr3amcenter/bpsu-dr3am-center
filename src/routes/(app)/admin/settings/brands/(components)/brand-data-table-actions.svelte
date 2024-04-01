@@ -6,6 +6,8 @@
 </script>
 
 {#key brandName}
-	<BrandDeleteDialog {brandName} />
-	<BrandEditDialog {brandName} />
+	<div class="flex">
+		<BrandDeleteDialog {brandName} />
+		<BrandEditDialog {brandName} />
+	</div>
 {/key}

@@ -6,6 +6,8 @@
 </script>
 
 {#key categoryName}
-	<CategoryDeleteDialog {categoryName} />
-	<CategoryEditDialog {categoryName} />
+	<div class="flex">
+		<CategoryDeleteDialog {categoryName} />
+		<CategoryEditDialog {categoryName} />
+	</div>
 {/key}

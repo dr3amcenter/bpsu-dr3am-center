@@ -46,7 +46,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Trigger class={buttonVariants()}>Add classification</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants()}>Add</Dialog.Trigger>
 	<Dialog.Content class="max-h-[90vh] overflow-auto">
 		<Dialog.Header>
 			<Dialog.Title>Create a new Classification</Dialog.Title>

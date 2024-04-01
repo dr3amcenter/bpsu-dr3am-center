@@ -188,7 +188,7 @@
 				<h3>Notifications</h3>
 
 				<a href="/admin/request" class="text-xs text-primary underline underline-offset-4"
-					>See All Requests</a
+					>See All</a
 				>
 			</div>
 
@@ -230,7 +230,7 @@
 
 				<a
 					href="/admin/transaction-report"
-					class="text-xs text-primary underline underline-offset-4">See All Transaction</a
+					class="text-xs text-primary underline underline-offset-4">See All</a
 				>
 			</div>
 

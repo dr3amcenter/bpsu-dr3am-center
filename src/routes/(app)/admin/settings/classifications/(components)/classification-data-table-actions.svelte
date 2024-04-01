@@ -6,6 +6,8 @@
 </script>
 
 {#key classificationName}
-	<ClassificationDelegeDialog {classificationName} />
-	<ClassificationEditDialog {classificationName} />
+	<div class="flex">
+		<ClassificationDelegeDialog {classificationName} />
+		<ClassificationEditDialog {classificationName} />
+	</div>
 {/key}

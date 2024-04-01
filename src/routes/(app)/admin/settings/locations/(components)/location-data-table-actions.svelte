@@ -6,6 +6,8 @@
 </script>
 
 {#key locationName}
-	<LocationDeleteDialog {locationName} />
-	<LocationEditDialog {locationName} />
+	<div class="flex">
+		<LocationDeleteDialog {locationName} />
+		<LocationEditDialog {locationName} />
+	</div>
 {/key}
