@@ -305,7 +305,7 @@
 	<Form.Field {form} name="acquisitionCost" class="col-span-12 md:col-span-6 lg:col-span-4">
 		<Form.Control let:attrs>
 			<Form.Label>Acquisition Cost</Form.Label>
-			<Input {...attrs} type="number" bind:value={$formData.acquisitionCost} />
+			<Input {...attrs} bind:value={$formData.acquisitionCost} />
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
@@ -321,7 +321,7 @@
 	<Form.Field {form} name="maintenanceCost" class="col-span-12 md:col-span-6 lg:col-span-4">
 		<Form.Control let:attrs>
 			<Form.Label>Maintenance Cost</Form.Label>
-			<Input {...attrs} type="number" bind:value={$formData.maintenanceCost} />
+			<Input {...attrs} bind:value={$formData.maintenanceCost} />
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
