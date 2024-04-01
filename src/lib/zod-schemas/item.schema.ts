@@ -41,6 +41,8 @@ export const createItemSchema = z.object({
 		.refine((v) => Number(v) >= 0, { message: "Please enter a positive number" })
 });
 
+export const editItemSchema = createItemSchema.extend({});
+
 export const approveItemSchema = z.object({
 	transactionId: z.string().min(1, "Please enter an id")
 });

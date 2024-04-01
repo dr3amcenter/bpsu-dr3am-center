@@ -1,5 +1,4 @@
 import { db } from "$lib/server/db";
-import { error } from "@sveltejs/kit";
 import type { PageServerLoad, Actions } from "./$types";
 import {
 	addIncomingItemAction,
@@ -11,25 +10,10 @@ import { superValidate } from "sveltekit-superforms";
 import { addIncomingItemSchema, addOutgoingItemSchema } from "$lib/zod-schemas/item.schema";
 import { zod } from "sveltekit-superforms/adapters";
 
-export const load: PageServerLoad = async ({ params }) => {
-	const equipment = await db.query.equipmentTable.findFirst({
-		where: (equipment, { eq }) => eq(equipment.id, params.id)
-	});
-
-	if (!equipment) {
-		error(404, {
-			message: "Not found"
-		});
-	}
-
-	if (equipment.isDeleted) {
-		error(404, {
-			message: "Item has been deleted"
-		});
-	}
+export const load: PageServerLoad = async ({ params, parent }) => {
+	await parent();
 
 	return {
-		equipment,
 		transactions: await db.query.transactionTable.findMany({
 			where: (transaction, { eq }) => eq(transaction.equipmentId, params.id),
 			with: {

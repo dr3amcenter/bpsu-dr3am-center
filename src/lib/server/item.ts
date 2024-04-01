@@ -4,6 +4,7 @@ import {
 	approveItemSchema,
 	createItemSchema,
 	declineItemSchema,
+	editItemSchema,
 	findItemSchema
 } from "$lib/zod-schemas/item.schema";
 import { fail, redirect, type RequestEvent } from "@sveltejs/kit";
@@ -38,6 +39,55 @@ export async function findItemAction(event: RequestEvent) {
 		}
 	} catch {
 		return setError(form, "", "Item not found");
+	}
+
+	return {
+		form
+	};
+}
+
+export async function editItemAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+
+	const form = await superValidate(event, zod(editItemSchema));
+	if (!form.valid) {
+		return fail(400, {
+			form
+		});
+	}
+
+	const data = form.data;
+
+	try {
+		await db
+			.update(equipmentTable)
+			.set({
+				item: data.item,
+				location: data.location,
+				category: data.category,
+				incoming: Number(data.incoming),
+				outgoing: Number(data.outgoing),
+				onHand: Number(data.onHand),
+				availability: data.availability,
+				consumability: data.consumability,
+				//OPTIONALS
+				code: data.code,
+				classification: data.classification,
+				expiryDate: data.expiryDate ? new Date(data.expiryDate) : null,
+				specification: data.specification,
+				hasExpired: data.hasExpired,
+				brand: data.brand,
+				dateAcquired: data.dateAcquired ? new Date(data.dateAcquired) : null,
+				acquisitionCost: data.acquisitionCost,
+				serialNumber: data.serialNumber,
+				controlNumber: data.controlNumber,
+				maintenanceCost: String(parseFloat(data.maintenanceCost)),
+				maintenanceInMonths: parseFloat(data.maintenanceInMonths),
+				updatedAt: new Date()
+			})
+			.where(eq(equipmentTable.id, event.params.id!));
+	} catch (e) {
+		return setError(form, "", "Unable to edit item");
 	}
 
 	return {

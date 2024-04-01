@@ -8,6 +8,9 @@
 	import TransactionDataTable from "$lib/components/transactions/transaction-data-table.svelte";
 	import RequestDataTable from "$lib/components/requests/request-data-table.svelte";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
+	import Button from "$lib/components/ui/button/button.svelte";
+
+	import { page } from "$app/stores";
 
 	export let data;
 
@@ -28,6 +31,12 @@
 			<div class="flex items-center gap-x-2">
 				<ItemAddIncomingDialog equipmentId={id} equipmentName={item} />
 				<ItemAddOutgoingDialog {onHand} equipmentId={id} equipmentName={item} />
+				<Button
+					href="/admin/inventory/{$page.params.id}/edit"
+					variant="outline"
+					size="sm"
+					class="h-7 text-xs">Edit</Button
+				>
 			</div>
 		</div>
 
