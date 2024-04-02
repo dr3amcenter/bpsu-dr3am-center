@@ -27,8 +27,6 @@ export async function findItemAction(event: RequestEvent) {
 
 	const { itemId } = form.data;
 
-	console.log(itemId);
-
 	try {
 		const item = await db.query.equipmentTable.findFirst({
 			where: (equipment, { eq }) => eq(equipment.id, itemId)
@@ -58,7 +56,6 @@ export async function editItemAction(event: RequestEvent) {
 
 	const data = form.data;
 
-	console.log(data.maintenanceCost);
 	try {
 		await db
 			.update(equipmentTable)
@@ -69,7 +66,10 @@ export async function editItemAction(event: RequestEvent) {
 				incoming: Number(data.incoming),
 				outgoing: Number(data.outgoing),
 				onHand: Number(data.onHand),
-				availability: data.availability,
+				availability:
+					data.availability === "Available" && Number(data.onHand) === 0
+						? "Out of Stocks"
+						: data.availability,
 				consumability: data.consumability,
 				//OPTIONALS
 				code: data.code,
@@ -162,7 +162,7 @@ export async function addIncomingItemAction(event: RequestEvent) {
 		});
 
 		if (!equipment) {
-			return setError(form, "", "Equipment not found");
+			return setError(form, "", "Item not found");
 		}
 
 		const newOnHand = equipment.onHand + quantityF;
@@ -171,10 +171,20 @@ export async function addIncomingItemAction(event: RequestEvent) {
 		await db.transaction(async (tx) => {
 			await tx
 				.update(equipmentTable)
-				.set({
-					onHand: newOnHand,
-					incoming: newIncoming
-				})
+				.set(
+					newOnHand === 0
+						? {
+								onHand: newOnHand,
+								incoming: newIncoming,
+								updatedAt: new Date(),
+								availability: "Out of Stocks"
+							}
+						: {
+								onHand: newOnHand,
+								incoming: newIncoming,
+								updatedAt: new Date()
+							}
+				)
 				.where(eq(equipmentTable.id, id))
 				.execute();
 
@@ -303,11 +313,20 @@ export async function approveItemAction(event: RequestEvent) {
 		await db.transaction(async (tx) => {
 			await tx
 				.update(equipmentTable)
-				.set({
-					onHand: newOnHand,
-					outgoing: newOutgoing,
-					updatedAt: new Date()
-				})
+				.set(
+					newOnHand === 0
+						? {
+								onHand: newOnHand,
+								outgoing: newOutgoing,
+								updatedAt: new Date(),
+								availability: "Out of Stocks"
+							}
+						: {
+								onHand: newOnHand,
+								outgoing: newOutgoing,
+								updatedAt: new Date()
+							}
+				)
 				.where(eq(equipmentTable.id, transaction.equipment.id))
 				.execute();
 
