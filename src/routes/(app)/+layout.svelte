@@ -10,8 +10,11 @@
 	import ScannerDialog from "$lib/components/scanner-dialog.svelte";
 	import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
 	import Dr3amLogo from "$lib/assets/img/dr3am-logo.png";
+	import { setUserState } from "$lib/store.js";
 
 	export let data;
+
+	const user = setUserState(data.user!);
 
 	let sidebarOpen = false;
 
