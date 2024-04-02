@@ -1,5 +1,5 @@
 <script>
-	import ItemCreateForm from "../(components)/item-create-form.svelte";
+	import ItemCreateForm from "$lib/components/item/item-create-form.svelte";
 
 	export let data;
 </script>

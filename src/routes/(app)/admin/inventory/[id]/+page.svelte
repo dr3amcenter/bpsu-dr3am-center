@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Availability from "$lib/components/availability.svelte";
 	import Expiration from "$lib/components/expiration.svelte";
-	import ItemDetails from "../(components)/item-details.svelte";
+	import ItemDetails from "$lib/components/item/item-details.svelte";
 	import * as Tabs from "$lib/components/ui/tabs/index.js";
-	import ItemAddIncomingDialog from "../(components)/item-add-incoming-dialog.svelte";
-	import ItemAddOutgoingDialog from "../(components)/item-add-outgoing-dialog.svelte";
+	import ItemAddIncomingDialog from "$lib/components/item/item-add-incoming-dialog.svelte";
+	import ItemAddOutgoingDialog from "$lib/components/item/item-add-outgoing-dialog.svelte";
 	import TransactionDataTable from "$lib/components/transactions/transaction-data-table.svelte";
 	import RequestDataTable from "$lib/components/requests/request-data-table.svelte";
 	import Badge from "$lib/components/ui/badge/badge.svelte";

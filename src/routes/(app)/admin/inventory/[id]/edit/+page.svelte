@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ItemEditForm from "../../(components)/item-edit-form.svelte";
+	import ItemEditForm from "$lib/components/item/item-edit-form.svelte";
 
 	export let data;
 </script>

@@ -4,13 +4,19 @@
 	import { writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
 	import ItemDataTableActions from "./item-data-table-actions.svelte";
-	import { Input } from "$lib/components/ui/input";
 	import Button from "$lib/components/ui/button/button.svelte";
+	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
+
 	import Outgoing from "$lib/components/outgoing.svelte";
 	import Incoming from "$lib/components/incoming.svelte";
 	import OnHand from "$lib/components/onHand.svelte";
 	import type { Equipment } from "$lib/server/db/schema";
 	import { format } from "date-fns";
+	import { ChevronDownIcon } from "lucide-svelte";
+	import { getFrequency } from "$lib/utils";
+	import { onMount } from "svelte";
+
+	export let searchInput = "";
 
 	export let data: Equipment[] = [];
 
@@ -33,11 +39,128 @@
 		}),
 		table.column({
 			accessor: "location",
-			header: "Location"
+			header: "Location",
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "availability",
+			header: "Availability",
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "consumability",
+			header: "Consumability",
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
 		}),
 		table.column({
 			accessor: "category",
-			header: "Category"
+			header: "Category",
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "brand",
+			header: "Brand",
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "classification",
+			header: "Classification",
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "dateAcquired",
+			header: "Acquired Date",
+			cell: ({ value }) => {
+				if (!value) return "";
+				const formatted = format(value, "MM-dd-yyyy");
+				return formatted;
+			},
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "expiryDate",
+			header: "Expiry Date",
+			cell: ({ value }) => {
+				if (!value) return "";
+				const formatted = format(value, "MM-dd-yyyy");
+				return formatted;
+			},
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "acquisitionCost",
+			header: "Acquisition Cost",
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "maintenanceCost",
+			header: "Maintenance Cost",
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "maintenanceInMonths",
+			header: "Maintenance In Months",
+			cell: ({ value }) => {
+				if (!value) return 0;
+				return getFrequency(value);
+			},
+			plugins: {
+				filter: {
+					exclude: true
+				}
+			}
+		}),
+		table.column({
+			accessor: "code",
+			header: "Code"
+		}),
+		table.column({
+			accessor: "serialNumber",
+			header: "Serial Number"
+		}),
+		table.column({
+			accessor: "controlNumber",
+			header: "Control Number"
 		}),
 		table.column({
 			accessor: "incoming",
@@ -106,23 +229,63 @@
 		})
 	]);
 
-	const { headerRows, pageRows, tableAttrs, tableBodyAttrs, pluginStates } =
+	const { headerRows, pageRows, tableAttrs, tableBodyAttrs, pluginStates, flatColumns } =
 		table.createViewModel(columns);
 	const { pageIndex, hasNextPage, hasPreviousPage } = pluginStates.page;
 	const { filterValue } = pluginStates.filter;
+	const { hiddenColumnIds } = pluginStates.hide;
+
+	const hidableCols = [
+		"consumability",
+		"category",
+		"brand",
+		"classification",
+		"dateAcquired",
+		"expiryDate",
+		"acquisitionCost",
+		"maintenanceCost",
+		"maintenanceInMonths",
+		"code",
+		"controlNumber",
+		"serialNumber"
+	];
+
+	const ids = flatColumns.map((col) => col.id);
+	let hideForId = Object.fromEntries(
+		ids.map((id) => {
+			if (hidableCols.find((v) => v === id)) {
+				return [id, false];
+			}
+
+			return [id, true];
+		})
+	);
+
+	$: $hiddenColumnIds = Object.entries(hideForId)
+		.filter(([, hide]) => !hide)
+		.map(([id]) => id);
+
+	$: $filterValue = searchInput;
 </script>
 
-<div class="bg-white p-6">
-	<div class="mb-6 space-y-6">
-		<div class="flex items-center gap-x-3">
-			<Input
-				class="max-w-xs rounded-sm border-0 bg-gray-100 px-4 py-6 text-gray-500"
-				placeholder="Search"
-				type="text"
-				bind:value={$filterValue}
-			/>
-			<Button href="/admin/inventory/new" size="sm" class="ml-auto">Add</Button>
-		</div>
+<div>
+	<div class="flex">
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger asChild let:builder>
+				<Button variant="outline" class="ml-auto" builders={[builder]}>
+					Columns <ChevronDownIcon class="ml-2 h-4 w-4" />
+				</Button>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content>
+				{#each flatColumns as col}
+					{#if hidableCols.includes(col.id)}
+						<DropdownMenu.CheckboxItem bind:checked={hideForId[col.id]}>
+							{col.header}
+						</DropdownMenu.CheckboxItem>
+					{/if}
+				{/each}
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	</div>
 	<Table.Root {...$tableAttrs}>
 		<Table.Header>
