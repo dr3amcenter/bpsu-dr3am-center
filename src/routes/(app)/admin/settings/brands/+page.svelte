@@ -1,7 +1,7 @@
 <script>
 	import { Input } from "$lib/components/ui/input";
 	import Title from "$lib/components/title.svelte";
-	import CategoryDataTable from "./(components)/brand-data-table.svelte";
+	import BrandDataTable from "./(components)/brand-data-table.svelte";
 
 	import BrandCreateDialog from "./(components)/brand-create-dialog.svelte";
 
@@ -26,6 +26,6 @@
 			</div>
 		</div>
 
-		<CategoryDataTable data={data.brands} bind:searchInput />
+		<BrandDataTable data={data.brands} bind:searchInput />
 	</div>
 </main>
