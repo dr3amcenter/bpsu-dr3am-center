@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Form from "$lib/components/ui/form";
-	import { declineItemSchema } from "$lib/zod-schemas/item.schema";
+	import { deleteRequestItemSchema } from "$lib/zod-schemas/item.schema";
 	import { superForm, type SuperValidated, type Infer } from "sveltekit-superforms";
 	import { zodClient } from "sveltekit-superforms/adapters";
 	import { Input } from "$lib/components/ui/input";
@@ -9,15 +9,16 @@
 
 	import { page } from "$app/stores";
 
-	export let theForm: SuperValidated<Infer<typeof declineItemSchema>> = $page.data.declineItemForm;
+	export let theForm: SuperValidated<Infer<typeof deleteRequestItemSchema>> =
+		$page.data.deleteRequestItemForm;
 
 	export let transactionId: string;
 
 	let open = false;
 
 	const form = superForm(theForm, {
-		validators: zodClient(declineItemSchema),
-		id: `decline-form-${transactionId}`,
+		validators: zodClient(deleteRequestItemSchema),
+		id: `delete-request-form-${transactionId}`,
 		resetForm: false,
 		onUpdate(event) {
 			if (!event.form.valid) {
@@ -26,7 +27,7 @@
 				}
 				return;
 			}
-			toast.success("Request Approved");
+			toast.success("Request Deleted");
 			open = false;
 		}
 	});
@@ -36,7 +37,7 @@
 	$: $formData.transactionId = transactionId;
 </script>
 
-<form action="?/declineItem" method="POST" use:enhance>
+<form action="?/deleteRequestItem" method="POST" use:enhance>
 	<Form.Field {form} name="transactionId">
 		<Form.Control let:attrs>
 			<Input {...attrs} type="hidden" bind:value={$formData.transactionId} />

@@ -43,6 +43,18 @@ export const createItemSchema = z.object({
 
 export const editItemSchema = createItemSchema.extend({});
 
+export const createRequestItemSchema = z.object({
+	id: z.string().min(1, "Please enter an id"),
+	quantity: z
+		.string()
+		.default("0")
+		.refine((v) => Number(v) > 0, { message: "Please enter a positive number" })
+});
+
+export const deleteRequestItemSchema = z.object({
+	transactionId: z.string().min(1, "Please enter an id")
+});
+
 export const approveItemSchema = z.object({
 	transactionId: z.string().min(1, "Please enter an id")
 });

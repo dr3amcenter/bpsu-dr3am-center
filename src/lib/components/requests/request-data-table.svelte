@@ -51,7 +51,9 @@
 			accessor: (transactionValue) => transactionValue,
 			header: "",
 			cell: ({ value }) => {
-				return createRender(RequestDataTableActions, { id: value.id });
+				return createRender(RequestDataTableActions, {
+					id: value.id
+				});
 			}
 		})
 	]);

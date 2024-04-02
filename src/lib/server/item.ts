@@ -3,7 +3,9 @@ import {
 	addOutgoingItemSchema,
 	approveItemSchema,
 	createItemSchema,
+	createRequestItemSchema,
 	declineItemSchema,
+	deleteRequestItemSchema,
 	editItemSchema,
 	findItemSchema
 } from "$lib/zod-schemas/item.schema";
@@ -206,6 +208,112 @@ export async function addIncomingItemAction(event: RequestEvent) {
 	}
 
 	return { form };
+}
+
+export async function createRequestItemAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+
+	const form = await superValidate(event, zod(createRequestItemSchema));
+
+	if (!form.valid) {
+		return fail(400, {
+			form
+		});
+	}
+
+	const { id, quantity } = form.data;
+
+	const quantityF = Number(quantity);
+
+	try {
+		const equipment = await db.query.equipmentTable.findFirst({
+			where: (equipment, { eq }) => eq(equipment.id, id),
+			with: {
+				transactions: {
+					where: (transaction, { eq, and }) =>
+						and(
+							eq(transaction.equipmentId, id),
+							eq(transaction.status, "pending"),
+							eq(transaction.requesterId, event.locals.user!.id)
+						)
+				}
+			}
+		});
+
+		if (!equipment) {
+			return setError(form, "", "Item not found");
+		}
+
+		const newOnHand = equipment.onHand - quantityF;
+
+		if (newOnHand < 0) {
+			return setError(form, "", "Not enough on hand");
+		}
+
+		const pendingTotal = equipment.transactions.reduce(
+			(accumulator, currentValue) => accumulator + currentValue.quantity,
+			0
+		);
+
+		if (newOnHand - pendingTotal < 0) {
+			return setError(form, "", "Still have pending request");
+		}
+
+		await db.insert(transactionTable).values({
+			equipmentId: id,
+			quantity: quantityF,
+			type: "outgoing",
+			status: "pending",
+			requesterId: event.locals.user!.id
+		});
+	} catch (e) {
+		return setError(form, "", "Unable to create request");
+	}
+
+	return { form };
+}
+
+export async function deleteRequestItemAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+
+	const form = await superValidate(event, zod(deleteRequestItemSchema));
+
+	if (!form.valid) {
+		return fail(400, {
+			form
+		});
+	}
+
+	const { transactionId } = form.data;
+
+	const transaction = await db.query.transactionTable.findFirst({
+		where: (transaction, { eq }) => eq(transaction.id, transactionId),
+		with: {
+			equipment: true
+		}
+	});
+
+	if (!transaction) {
+		return setError(form, "", "Request not found");
+	}
+
+	if (transaction.status === "approved") {
+		return setError(form, "", "Request already approved");
+	}
+
+	if (transaction.status === "declined") {
+		return setError(form, "", "Request already declined");
+	}
+
+	try {
+		await db.delete(transactionTable).where(eq(transactionTable.id, transactionId)).execute();
+	} catch (error) {
+		return setError(form, "", "Unable to delete request");
+	}
+
+	return {
+		form
+	};
 }
 
 export async function addOutgoingItemAction(event: RequestEvent) {

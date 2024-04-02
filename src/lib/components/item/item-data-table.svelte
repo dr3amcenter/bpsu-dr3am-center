@@ -14,7 +14,6 @@
 	import { format } from "date-fns";
 	import { ChevronDownIcon } from "lucide-svelte";
 	import { getFrequency } from "$lib/utils";
-	import { onMount } from "svelte";
 
 	export let searchInput = "";
 
