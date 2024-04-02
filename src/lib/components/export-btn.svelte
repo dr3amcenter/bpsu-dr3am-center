@@ -12,4 +12,4 @@
 	}
 </script>
 
-<Button on:click={exportData}>Export</Button>
+<Button on:click={exportData} class={$$props.class}>Export</Button>
