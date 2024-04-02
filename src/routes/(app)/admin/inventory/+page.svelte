@@ -38,6 +38,6 @@
 			</div>
 		</div>
 
-		<ItemDataTable data={data.equipments} />
+		<ItemDataTable data={data.equipments} bind:searchInput />
 	</div>
 </main>
