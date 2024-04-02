@@ -1,4 +1,4 @@
-import { type RequestEvent, fail } from "@sveltejs/kit";
+import { type RequestEvent, fail, redirect } from "@sveltejs/kit";
 import {
 	deleteCategorySchema,
 	editCategorySchema,
@@ -17,6 +17,9 @@ export async function getCategories() {
 }
 
 export async function createCategoriesAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(createCategoriesSchema));
 
 	if (!form.valid) {
@@ -45,6 +48,9 @@ export async function createCategoriesAction(event: RequestEvent) {
 }
 
 export async function deleteCategoryAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(deleteCategorySchema));
 
 	if (!form.valid) {
@@ -79,6 +85,9 @@ export async function deleteCategoryAction(event: RequestEvent) {
 }
 
 export async function editCategoryAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(editCategorySchema));
 
 	if (!form.valid) {

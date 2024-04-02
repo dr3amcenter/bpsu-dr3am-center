@@ -10,8 +10,14 @@ import {
 	classificationTable
 } from "$lib/server/db/schema";
 import { editItemAction } from "$lib/server/item";
+import { redirect } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async ({ parent }) => {
+export const load: PageServerLoad = async (event) => {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
+	const { parent } = event;
+
 	await parent();
 
 	return {

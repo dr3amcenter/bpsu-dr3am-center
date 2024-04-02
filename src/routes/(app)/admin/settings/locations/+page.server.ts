@@ -14,8 +14,12 @@ import {
 	editLocationAction,
 	getLocations
 } from "$lib/server/location";
+import { redirect } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	return {
 		locations: await getLocations(),
 		createLocationsForm: await superValidate(zod(createLocationsSchema)),

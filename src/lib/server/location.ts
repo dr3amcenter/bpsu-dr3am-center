@@ -1,4 +1,4 @@
-import { type RequestEvent, fail } from "@sveltejs/kit";
+import { type RequestEvent, fail, redirect } from "@sveltejs/kit";
 import {
 	deleteLocationSchema,
 	editLocationSchema,
@@ -17,6 +17,9 @@ export async function getLocations() {
 }
 
 export async function createLocationsAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(createLocationsSchema));
 
 	if (!form.valid) {
@@ -45,6 +48,9 @@ export async function createLocationsAction(event: RequestEvent) {
 }
 
 export async function deleteLocationAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(deleteLocationSchema));
 
 	if (!form.valid) {
@@ -79,6 +85,9 @@ export async function deleteLocationAction(event: RequestEvent) {
 }
 
 export async function editLocationAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(editLocationSchema));
 
 	if (!form.valid) {

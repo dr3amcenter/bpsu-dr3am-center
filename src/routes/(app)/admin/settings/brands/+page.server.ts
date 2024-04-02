@@ -14,8 +14,12 @@ import {
 	editBrandAction,
 	getBrands
 } from "$lib/server/brand";
+import { redirect } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	return {
 		brands: await getBrands(),
 		createBrandsForm: await superValidate(zod(createBrandsSchema)),

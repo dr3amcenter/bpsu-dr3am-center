@@ -14,8 +14,12 @@ import {
 	editCategoryAction,
 	getCategories
 } from "$lib/server/category";
+import { redirect } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	return {
 		categories: await getCategories(),
 		createCategoriesForm: await superValidate(zod(createCategoriesSchema)),

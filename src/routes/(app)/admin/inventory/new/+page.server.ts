@@ -11,8 +11,12 @@ import {
 } from "$lib/server/db/schema";
 import { createItemAction } from "$lib/server/item";
 import { createItemSchema } from "$lib/zod-schemas/item.schema";
+import { redirect } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	return {
 		createItemForm: await superValidate(zod(createItemSchema)),
 

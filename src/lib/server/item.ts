@@ -16,6 +16,7 @@ import { eq } from "drizzle-orm";
 
 export async function findItemAction(event: RequestEvent) {
 	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const form = await superValidate(event, zod(findItemSchema));
 
@@ -46,6 +47,7 @@ export async function findItemAction(event: RequestEvent) {
 
 export async function editItemAction(event: RequestEvent) {
 	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const form = await superValidate(event, zod(editItemSchema));
 	if (!form.valid) {
@@ -98,6 +100,7 @@ export async function editItemAction(event: RequestEvent) {
 
 export async function createItemAction(event: RequestEvent) {
 	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const form = await superValidate(event, zod(createItemSchema));
 	if (!form.valid) {
@@ -143,6 +146,7 @@ export async function createItemAction(event: RequestEvent) {
 
 export async function addIncomingItemAction(event: RequestEvent) {
 	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const form = await superValidate(event, zod(addIncomingItemSchema));
 
@@ -206,6 +210,7 @@ export async function addIncomingItemAction(event: RequestEvent) {
 
 export async function addOutgoingItemAction(event: RequestEvent) {
 	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const form = await superValidate(event, zod(addOutgoingItemSchema));
 
@@ -263,7 +268,8 @@ export async function addOutgoingItemAction(event: RequestEvent) {
 }
 
 export async function approveItemAction(event: RequestEvent) {
-	if (!event.locals.session) redirect(302, "/login");
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const form = await superValidate(event, zod(approveItemSchema));
 
@@ -346,7 +352,8 @@ export async function approveItemAction(event: RequestEvent) {
 }
 
 export async function declineItemAction(event: RequestEvent) {
-	if (!event.locals.session) redirect(302, "/login");
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const form = await superValidate(event, zod(declineItemSchema));
 

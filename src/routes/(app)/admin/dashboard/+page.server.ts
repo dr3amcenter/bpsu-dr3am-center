@@ -4,7 +4,8 @@ import { db } from "$lib/server/db";
 import { approveItemAction, declineItemAction } from "$lib/server/item";
 
 export const load: PageServerLoad = async (event) => {
-	if (!event.locals.session) redirect(302, "/login");
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	return {
 		outgoingRequests: await db.query.transactionTable.findMany({

@@ -4,7 +4,8 @@ import { db } from "$lib/server/db";
 import { redirect } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async (event) => {
-	if (!event.locals.session) redirect(302, "/login");
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	return {
 		users: await db.query.userTable

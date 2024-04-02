@@ -9,8 +9,14 @@ import {
 import { superValidate } from "sveltekit-superforms";
 import { addIncomingItemSchema, addOutgoingItemSchema } from "$lib/zod-schemas/item.schema";
 import { zod } from "sveltekit-superforms/adapters";
+import { redirect } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async ({ params, parent }) => {
+export const load: PageServerLoad = async (event) => {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
+	const { parent, params } = event;
+
 	await parent();
 
 	return {

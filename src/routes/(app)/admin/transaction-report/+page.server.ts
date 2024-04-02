@@ -3,7 +3,8 @@ import type { PageServerLoad } from "./$types";
 import { db } from "$lib/server/db";
 
 export const load: PageServerLoad = async (event) => {
-	if (!event.locals.session) redirect(302, "/login");
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const start = event.url.searchParams.get("startDate");
 	const end = event.url.searchParams.get("endDate");

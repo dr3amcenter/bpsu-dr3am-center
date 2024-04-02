@@ -1,4 +1,4 @@
-import { type RequestEvent, fail } from "@sveltejs/kit";
+import { type RequestEvent, fail, redirect } from "@sveltejs/kit";
 import {
 	deleteClassificationSchema,
 	editClassificationSchema,
@@ -17,6 +17,9 @@ export async function getClassifications() {
 }
 
 export async function createClassificationsAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(createClassificationsSchema));
 
 	if (!form.valid) {
@@ -45,6 +48,9 @@ export async function createClassificationsAction(event: RequestEvent) {
 }
 
 export async function deleteClassificationAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(deleteClassificationSchema));
 
 	if (!form.valid) {
@@ -79,6 +85,9 @@ export async function deleteClassificationAction(event: RequestEvent) {
 }
 
 export async function editClassificationAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
 	const form = await superValidate(event, zod(editClassificationSchema));
 
 	if (!form.valid) {
