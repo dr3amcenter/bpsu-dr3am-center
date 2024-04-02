@@ -11,6 +11,9 @@
 	import { findItemSchema } from "$lib/zod-schemas/item.schema";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
+	import { getUserState } from "$lib/store";
+
+	const user = getUserState();
 
 	let scannedResult: string;
 	let videoFeed: HTMLVideoElement;
@@ -23,7 +26,6 @@
 		id: `find-item-form`,
 		resetForm: false,
 		onUpdate(event) {
-			console.log("OYYY");
 			if (!event.form.valid) {
 				if (event.form.errors._errors) {
 					toast.error(event.form.errors._errors[0], {
@@ -37,7 +39,7 @@
 				action: {
 					label: "View",
 					onClick: () => {
-						goto(`/admin/inventory/${event.form.data.itemId}`);
+						goto(`/${$user.role}/inventory/${event.form.data.itemId}`);
 					}
 				},
 				position: "bottom-center",

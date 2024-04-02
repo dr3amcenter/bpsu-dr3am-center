@@ -18,9 +18,7 @@
 
 	let sidebarOpen = false;
 
-	$: role = data.user!.role;
-
-	$: activeLinks = role ? links[role] : [];
+	$: activeLinks = links[$user.role];
 
 	$: if ($page.url.pathname) {
 		sidebarOpen = false;
@@ -70,8 +68,8 @@
 						<Avatar.Fallback><UserIcon /></Avatar.Fallback>
 					</Avatar.Root>
 					<div>
-						<div class="text-xs">John Carlo Asilo</div>
-						<div class="text-xs uppercase text-gray-500">Admin</div>
+						<div class="text-xs">{$user.fullName}</div>
+						<div class="text-xs uppercase text-gray-500">{$user.role}</div>
 					</div>
 				</div>
 
