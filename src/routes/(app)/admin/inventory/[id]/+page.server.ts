@@ -35,7 +35,7 @@ export const load: PageServerLoad = async (event) => {
 };
 
 export const actions: Actions = {
-	addOutgingItem: addOutgoingItemAction,
+	addOutgoingItem: addOutgoingItemAction,
 	addIncomingItem: addIncomingItemAction,
 	approveItem: approveItemAction,
 	declineItem: declineItemAction
