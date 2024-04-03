@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { cubicOut } from "svelte/easing";
 import type { TransitionConfig } from "svelte/transition";
-import { isWithinInterval, addDays, isAfter } from "date-fns";
+import { isWithinInterval, isAfter, subDays } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -58,7 +58,7 @@ export const flyAndScale = (
 
 export function checkExpiration(dateToCheck: Date) {
 	const currentDate = new Date();
-	const futureDate = addDays(currentDate, 30);
+	const futureDate = subDays(currentDate, 30);
 
 	const isExpired = isAfter(dateToCheck, currentDate);
 	const isExpiredWithin30Days = isWithinInterval(dateToCheck, {
