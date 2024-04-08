@@ -58,17 +58,21 @@ export const flyAndScale = (
 
 export function checkExpiration(dateToCheck: Date) {
 	const currentDate = new Date();
-	const futureDate = subDays(currentDate, 30);
 
 	const isExpired = isAfter(dateToCheck, currentDate);
 	const isExpiredWithin30Days = isWithinInterval(dateToCheck, {
 		start: currentDate,
-		end: futureDate
+		end: subDays(currentDate, 30)
+	});
+	const isExpiredWithin6Months = isWithinInterval(dateToCheck, {
+		start: currentDate,
+		end: subDays(currentDate, 180)
 	});
 
 	return {
 		isExpired: isExpired,
-		isExpiredWithin30Days: isExpiredWithin30Days
+		isExpiredWithin30Days: isExpiredWithin30Days,
+		isExpiredWithin6Months: isExpiredWithin6Months
 	};
 }
 

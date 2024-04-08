@@ -15,5 +15,7 @@
 		<Badge variant="outline">expired</Badge>
 	{:else if expirationDetails.isExpiredWithin30Days}
 		<Badge variant="outline">expired within 30 days</Badge>
+	{:else if expirationDetails.isExpiredWithin6Months}
+		<Badge variant="outline">expired within 6 months</Badge>
 	{/if}
 {/if}
