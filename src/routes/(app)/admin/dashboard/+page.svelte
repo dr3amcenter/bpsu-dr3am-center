@@ -44,14 +44,6 @@
 		return false;
 	}).length;
 
-	$: consumableItemTotal = data.items.filter((item) => {
-		return item.consumability === "Consumable";
-	}).length;
-
-	$: forRepairItemTotal = data.items.filter((item) => {
-		return item.availability === "For Repair";
-	}).length;
-
 	$: expiredItemIn30DaysTotal = data.items.filter((item) => {
 		if (item.expiryDate) {
 			if (checkExpiration(item.expiryDate).isExpiredWithin30Days) {
@@ -60,6 +52,28 @@
 		}
 
 		return false;
+	}).length;
+
+	$: expiredItemIn6MonthsTotal = data.items.filter((item) => {
+		if (item.expiryDate) {
+			if (checkExpiration(item.expiryDate).isExpiredWithin6Months) {
+				return true;
+			}
+		}
+
+		return false;
+	}).length;
+
+	$: lowStockItemTotal = data.items.filter((item) => {
+		return item.availability === "Out of Stocks" || item.onHand === 0;
+	}).length;
+
+	$: consumableItemTotal = data.items.filter((item) => {
+		return item.consumability === "Consumable";
+	}).length;
+
+	$: forRepairItemTotal = data.items.filter((item) => {
+		return item.availability === "For Repair";
 	}).length;
 
 	$: outgoingTotal = data.items.reduce(
@@ -157,7 +171,7 @@
 			<div class="space-y-5">
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">Low Stock Items</div>
-					<div class="text-lg font-semibold">20</div>
+					<div class="text-lg font-semibold">{lowStockItemTotal}</div>
 				</div>
 				<Separator class="h-[.5px]" />
 				<div class="flex items-center justify-between">
@@ -175,10 +189,10 @@
 					<div class="flex items-center justify-between">
 						<div class="text-xs font-light text-gray-500">Active Items</div>
 						<div class="text-lg font-semibold">
-							{Math.floor((100 * (activeItemTotal ?? 0)) / (itemTotal ?? 1))}%
+							{Math.floor((100 * activeItemTotal) / (itemTotal || 1))}%
 						</div>
 					</div>
-					<Progress value={activeItemTotal} max={itemTotal} class="h-1" />
+					<Progress value={activeItemTotal} max={itemTotal || 1} class="h-1" />
 				</div>
 			</div>
 		</div>
@@ -204,17 +218,28 @@
 					<div class="text-xs font-light text-gray-500">Expired Items</div>
 					<div class="text-lg font-semibold">{expiredItemTotal}</div>
 				</div>
+
 				<Separator class="h-[.5px]" />
+
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">Expired Item in 30 Days</div>
 					<div class="text-lg font-semibold">{expiredItemIn30DaysTotal}</div>
 				</div>
+
+				<Separator class="h-[.5px]" />
+
+				<div class="flex items-center justify-between">
+					<div class="text-xs font-light text-gray-500">Expired Item in 6 Months</div>
+					<div class="text-lg font-semibold">{expiredItemIn6MonthsTotal}</div>
+				</div>
+
 				<Separator class="h-[.5px]" />
 
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">Consumable Items</div>
 					<div class="text-lg font-semibold">{consumableItemTotal}</div>
 				</div>
+
 				<Separator class="h-[.5px]" />
 
 				<div class="flex items-center justify-between">
