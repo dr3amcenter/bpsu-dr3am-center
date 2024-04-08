@@ -138,7 +138,15 @@
 		({ availability }) => availability === selectedAvailability.value
 	);
 
-	$: chartResponseTrigger = outerWidth >= 800;
+	let chartResponseTrigger = "1";
+
+	$: if (outerWidth >= 800) {
+		chartResponseTrigger = "2";
+	} else {
+		chartResponseTrigger = "3";
+	}
+
+	$: chartResponseTrigger = selectedAvailability.value;
 </script>
 
 <svelte:window bind:outerWidth />
@@ -237,7 +245,7 @@
 				</Select.Root>
 			</div>
 
-			{#key chartResponseTrigger && chartData}
+			{#key chartResponseTrigger}
 				<CategoryBarchart data={chartData} {outerWidth} />
 			{/key}
 		</div>
