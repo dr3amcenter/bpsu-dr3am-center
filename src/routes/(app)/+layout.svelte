@@ -85,8 +85,15 @@
 					</Button>
 				</form>
 
-				<div class="text-xs text-gray-300">
+				<div class="text-center text-xs text-gray-300">
 					Inventory's data is based on information collected starting from April 4, 2024.
+				</div>
+				<div class="text-center text-xs text-gray-300">
+					© 2024 <a
+						href="https://github.com/pasokoner"
+						target="_blank"
+						class="text-primary/40 underline">John Carlo Asilo</a
+					>
 				</div>
 			</div>
 		</div>
