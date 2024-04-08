@@ -245,6 +245,18 @@ export async function createRequestItemAction(event: RequestEvent) {
 			return setError(form, "", "Item not found");
 		}
 
+		if (equipment.availability === "Out of Stocks") {
+			return setError(form, "", "Currently Out of Stocks");
+		}
+
+		if (equipment.availability === "Not Available") {
+			return setError(form, "", "Currently Not Available");
+		}
+
+		if (equipment.availability === "For Repair") {
+			return setError(form, "", "Currently For Repair");
+		}
+
 		const newOnHand = equipment.onHand - quantityF;
 
 		if (newOnHand < 0) {
