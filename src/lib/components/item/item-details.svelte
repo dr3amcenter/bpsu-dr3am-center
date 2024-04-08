@@ -9,6 +9,8 @@
 
 	import { getFrequency } from "$lib/utils";
 	import { format } from "date-fns";
+	import Button from "../ui/button/button.svelte";
+	import ItemDeleteDialog from "./item-delete-dialog.svelte";
 
 	export let equipment: Equipment;
 
@@ -107,5 +109,11 @@
 	<div class="col-span-10 space-y-4">
 		<h4 class="col-span-5 tracking-widest">ITEM QR CODE</h4>
 		<QrCode value={equipment.id} title={equipment.item} />
+	</div>
+
+	<div class="col-span-10 flex space-y-4">
+		<div class="ml-auto">
+			<ItemDeleteDialog equipmentId={equipment.id} equipmentName={equipment.item} />
+		</div>
 	</div>
 </div>

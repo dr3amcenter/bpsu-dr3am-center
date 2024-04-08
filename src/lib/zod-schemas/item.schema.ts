@@ -63,6 +63,10 @@ export const declineItemSchema = z.object({
 	transactionId: z.string().min(1, "Please enter an id")
 });
 
+export const deleteItemSchema = z.object({
+	equipmentId: z.string().min(1, "Please enter an id")
+});
+
 export const addIncomingItemSchema = z.object({
 	id: z.string().min(1, "Please enter an id"),
 	quantity: z

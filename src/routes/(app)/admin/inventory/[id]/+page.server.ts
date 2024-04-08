@@ -4,10 +4,15 @@ import {
 	addIncomingItemAction,
 	addOutgoingItemAction,
 	approveItemAction,
-	declineItemAction
+	declineItemAction,
+	deleteItemAction
 } from "$lib/server/item";
 import { superValidate } from "sveltekit-superforms";
-import { addIncomingItemSchema, addOutgoingItemSchema } from "$lib/zod-schemas/item.schema";
+import {
+	addIncomingItemSchema,
+	addOutgoingItemSchema,
+	deleteItemSchema
+} from "$lib/zod-schemas/item.schema";
 import { zod } from "sveltekit-superforms/adapters";
 import { redirect } from "@sveltejs/kit";
 
@@ -30,13 +35,15 @@ export const load: PageServerLoad = async (event) => {
 			orderBy: (transaction, { asc }) => asc(transaction.updatedAt)
 		}),
 		addIncomingItemForm: await superValidate(zod(addIncomingItemSchema)),
-		addOutgoingItemForm: await superValidate(zod(addOutgoingItemSchema))
+		addOutgoingItemForm: await superValidate(zod(addOutgoingItemSchema)),
+		deleteItemForm: await superValidate(zod(deleteItemSchema))
 	};
 };
 
 export const actions: Actions = {
 	addOutgoingItem: addOutgoingItemAction,
 	addIncomingItem: addIncomingItemAction,
+	deleteItem: deleteItemAction,
 	approveItem: approveItemAction,
 	declineItem: declineItemAction
 };

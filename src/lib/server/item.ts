@@ -5,6 +5,7 @@ import {
 	createItemSchema,
 	createRequestItemSchema,
 	declineItemSchema,
+	deleteItemSchema,
 	deleteRequestItemSchema,
 	editItemSchema,
 	findItemSchema
@@ -14,7 +15,7 @@ import { setError, superValidate } from "sveltekit-superforms";
 import { equipmentTable, transactionTable } from "./db/schema";
 import { db } from "./db";
 import { zod } from "sveltekit-superforms/adapters";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export async function findItemAction(event: RequestEvent) {
 	if (!event.locals.user) redirect(302, "/login");
@@ -505,4 +506,40 @@ export async function declineItemAction(event: RequestEvent) {
 	return {
 		form
 	};
+}
+
+export async function deleteItemAction(event: RequestEvent) {
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
+
+	const form = await superValidate(event, zod(deleteItemSchema));
+
+	if (!form.valid) {
+		return fail(400, {
+			form
+		});
+	}
+
+	const { equipmentId } = form.data;
+
+	try {
+		await db.transaction(async (tx) => {
+			await tx
+				.update(equipmentTable)
+				.set({ isDeleted: true })
+				.where(eq(equipmentTable.id, equipmentId))
+				.execute();
+
+			await tx
+				.delete(transactionTable)
+				.where(
+					and(eq(transactionTable.equipmentId, equipmentId), eq(transactionTable.status, "pending"))
+				)
+				.execute();
+		});
+	} catch (error) {
+		return setError(form, "", "Unable to delete item");
+	}
+
+	redirect(302, "/admin/inventory");
 }
