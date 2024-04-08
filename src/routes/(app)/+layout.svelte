@@ -84,6 +84,10 @@
 						Logout
 					</Button>
 				</form>
+
+				<div class="text-xs text-gray-300">
+					Inventory's data is based on information collected starting from April 4, 2024.
+				</div>
 			</div>
 		</div>
 	</aside>
