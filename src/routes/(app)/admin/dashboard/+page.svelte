@@ -224,7 +224,9 @@
 						v && (selectedAvailability = { label: v.value, value: v.value });
 					}}
 				>
-					<Select.Trigger class="w-[180px]">
+					<Select.Trigger
+						class="h-8 w-[120px] items-start px-2 sm:h-10 sm:w-[180px] sm:items-center sm:px-3"
+					>
 						<Select.Value placeholder="Availability" />
 					</Select.Trigger>
 					<Select.Content>
