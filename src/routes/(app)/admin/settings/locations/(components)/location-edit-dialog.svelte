@@ -27,7 +27,7 @@
 			if (!event.form.valid) {
 				return;
 			}
-			toast.success("Location has been deleted");
+			toast.success("Location has been editted");
 			open = false;
 		}
 	});

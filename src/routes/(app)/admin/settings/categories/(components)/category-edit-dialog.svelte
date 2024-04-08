@@ -27,7 +27,7 @@
 			if (!event.form.valid) {
 				return;
 			}
-			toast.success("Category has been deleted");
+			toast.success("Category has been editted");
 			open = false;
 		}
 	});

@@ -26,7 +26,7 @@
 			if (!event.form.valid) {
 				return;
 			}
-			toast.success("Brand has been deleted");
+			toast.success("Brand has been editted");
 			open = false;
 		}
 	});

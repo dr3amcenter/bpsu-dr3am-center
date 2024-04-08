@@ -27,7 +27,7 @@
 			if (!event.form.valid) {
 				return;
 			}
-			toast.success("Classification has been deleted");
+			toast.success("Classification has been editted");
 			open = false;
 		}
 	});
