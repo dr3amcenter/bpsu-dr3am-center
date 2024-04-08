@@ -1,12 +1,16 @@
 <script lang="ts">
+	import CategoryBarchart from "$lib/components/category-barchart.svelte";
 	import RequestDataTable from "$lib/components/requests/request-data-table.svelte";
-	import Title from "$lib/components/title.svelte";
 	import TransactionDataTable from "$lib/components/transactions/transaction-data-table.svelte";
+	import * as Select from "$lib/components/ui/select";
 	import Progress from "$lib/components/ui/progress/progress.svelte";
 	import Separator from "$lib/components/ui/separator/separator.svelte";
 	import { checkExpiration, groupBy } from "$lib/utils";
+	import { availabilities } from "$lib/config.js";
 
 	export let data;
+
+	let outerWidth = 0;
 
 	$: itemTotal = data.items.length;
 
@@ -124,7 +128,20 @@
 
 		return accumulator + total;
 	}, 0);
+
+	let selectedAvailability = {
+		label: "Available",
+		value: "Available"
+	};
+
+	$: chartData = data.items.filter(
+		({ availability }) => availability === selectedAvailability.value
+	);
+
+	$: chartResponseTrigger = outerWidth >= 800;
 </script>
+
+<svelte:window bind:outerWidth />
 
 <main class="container space-y-8">
 	<div class="grid grid-cols-2 gap-y-8">
@@ -166,7 +183,7 @@
 		</div>
 	</div>
 	<div class="flex flex-col justify-start gap-8 xl:flex-row">
-		<div class="min-w-[360px] space-y-4 rounded-lg border bg-white px-8 py-6">
+		<div class="w-full max-w-[360px] space-y-4 rounded-lg border bg-white px-8 py-6">
 			<h3>Inventory Details</h3>
 			<div class="space-y-5">
 				<div class="flex items-center justify-between">
@@ -199,19 +216,33 @@
 
 		<div class="flex-1 space-y-4 rounded-lg border bg-white px-8 py-6">
 			<div class="flex items-center justify-between">
-				<h3>Notifications</h3>
+				<h3>Category Chart</h3>
 
-				<a href="/admin/request" class="text-xs text-primary underline underline-offset-4"
-					>See All</a
+				<Select.Root
+					selected={selectedAvailability}
+					onSelectedChange={(v) => {
+						v && (selectedAvailability = { label: v.value, value: v.value });
+					}}
 				>
+					<Select.Trigger class="w-[180px]">
+						<Select.Value placeholder="Availability" />
+					</Select.Trigger>
+					<Select.Content>
+						{#each availabilities as availability}
+							<Select.Item value={availability}>{availability}</Select.Item>
+						{/each}
+					</Select.Content>
+				</Select.Root>
 			</div>
 
-			<RequestDataTable data={data.outgoingRequests} hidePagination />
+			{#key chartResponseTrigger && chartData}
+				<CategoryBarchart data={chartData} {outerWidth} />
+			{/key}
 		</div>
 	</div>
 
 	<div class="flex flex-col gap-8 xl:flex-row xl:items-start">
-		<div class="min-w-[360px] space-y-4 rounded-lg border bg-white px-8 py-6">
+		<div class="w-full max-w-[360px] space-y-4 rounded-lg border bg-white px-8 py-6">
 			<h3>Item Breakdown</h3>
 			<div class="space-y-5">
 				<div class="flex items-center justify-between">
@@ -251,15 +282,26 @@
 
 		<div class="flex-1 space-y-4 rounded-lg border bg-white px-8 py-6">
 			<div class="flex items-center justify-between">
-				<h3>Transactions Report</h3>
+				<h3>Notifications</h3>
 
-				<a
-					href="/admin/transaction-report"
-					class="text-xs text-primary underline underline-offset-4">See All</a
+				<a href="/admin/request" class="text-xs text-primary underline underline-offset-4"
+					>See All</a
 				>
 			</div>
 
-			<TransactionDataTable data={data.transactions} hidePagination />
+			<RequestDataTable data={data.outgoingRequests} hidePagination />
 		</div>
+	</div>
+
+	<div class="space-y-4 rounded-lg border bg-white px-8 py-6">
+		<div class="flex items-center justify-between">
+			<h3>Transactions Report</h3>
+
+			<a href="/admin/transaction-report" class="text-xs text-primary underline underline-offset-4"
+				>See All</a
+			>
+		</div>
+
+		<TransactionDataTable data={data.transactions} hidePagination />
 	</div>
 </main>
