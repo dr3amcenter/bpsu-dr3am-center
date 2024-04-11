@@ -1,5 +1,5 @@
 <script lang="ts">
-	import html2canvas from "html2canvas";
+	import { toPng } from "html-to-image";
 
 	import Dr3amLogo from "$lib/assets/img/dr3am-logo.png";
 	import Qr from "./qr.svelte";
@@ -10,10 +10,17 @@
 	let qrRef: HTMLElement;
 
 	function download() {
-		html2canvas(qrRef).then((c) => {
+		// html2canvas(qrRef).then((c) => {
+		// 	const link = document.createElement("a");
+		// 	link.download = `${title}.png`;
+		// 	link.href = c.toDataURL();
+		// 	link.click();
+		// });
+
+		toPng(qrRef).then(function (dataUrl) {
 			const link = document.createElement("a");
 			link.download = `${title}.png`;
-			link.href = c.toDataURL();
+			link.href = dataUrl;
 			link.click();
 		});
 	}
