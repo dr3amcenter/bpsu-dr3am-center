@@ -27,10 +27,8 @@
 	>
 		<Qr {value} />
 		<img
-			src={Dr3amLogo}
+			src="/favicon.png"
 			alt="BPSU Dr3am Center Logo"
-			width="32"
-			height="32"
 			class="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 transform bg-white opacity-70"
 		/>
 	</div>
