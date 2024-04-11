@@ -3,14 +3,10 @@
 	import Expiration from "$lib/components/expiration.svelte";
 	import ItemDetails from "$lib/components/item/item-details.svelte";
 	import * as Tabs from "$lib/components/ui/tabs/index.js";
-	import ItemAddIncomingDialog from "$lib/components/item/item-add-incoming-dialog.svelte";
-	import ItemAddOutgoingDialog from "$lib/components/item/item-add-outgoing-dialog.svelte";
 	import TransactionDataTable from "$lib/components/transactions/transaction-data-table.svelte";
 	import RequestDataTable from "$lib/components/requests/request-data-table.svelte";
 	import Badge from "$lib/components/ui/badge/badge.svelte";
-	import Button from "$lib/components/ui/button/button.svelte";
 
-	import { page } from "$app/stores";
 	import RequestCreateDialog from "$lib/components/requests/request-create-dialog.svelte";
 
 	export let data;
@@ -31,14 +27,6 @@
 			</div>
 			<div class="flex items-center gap-x-2">
 				<RequestCreateDialog {onHand} equipmentId={id} equipmentName={item} />
-				<!-- <ItemAddIncomingDialog equipmentId={id} equipmentName={item} />
-				<ItemAddOutgoingDialog {onHand} equipmentId={id} equipmentName={item} />
-				<Button
-					href="/admin/inventory/{$page.params.id}/edit"
-					variant="outline"
-					size="sm"
-					class="h-7 text-xs">Edit</Button
-				> -->
 			</div>
 		</div>
 

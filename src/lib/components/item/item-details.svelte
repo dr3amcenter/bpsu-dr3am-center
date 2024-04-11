@@ -9,10 +9,13 @@
 
 	import { getFrequency } from "$lib/utils";
 	import { format } from "date-fns";
-	import Button from "../ui/button/button.svelte";
 	import ItemDeleteDialog from "./item-delete-dialog.svelte";
+	import { userPrefersMode } from "mode-watcher";
+	import { getUserState } from "$lib/store";
 
 	export let equipment: Equipment;
+
+	const user = getUserState();
 
 	const emptyIndicator = "--------------------------";
 </script>
@@ -108,12 +111,17 @@
 
 	<div class="col-span-10 space-y-4">
 		<h4 class="col-span-5 tracking-widest">ITEM QR CODE</h4>
-		<QrCode value={equipment.id} title={equipment.item} />
+		<QrCode
+			value={`https://bpsu-dr3am-center.vercel.app/inventory/${equipment.id}`}
+			title={equipment.item}
+		/>
 	</div>
 
-	<div class="col-span-10 flex space-y-4">
-		<div class="ml-auto">
-			<ItemDeleteDialog equipmentId={equipment.id} equipmentName={equipment.item} />
+	{#if $user.role === "admin"}
+		<div class="col-span-10 flex space-y-4">
+			<div class="ml-auto">
+				<ItemDeleteDialog equipmentId={equipment.id} equipmentName={equipment.item} />
+			</div>
 		</div>
-	</div>
+	{/if}
 </div>

@@ -61,7 +61,18 @@
 		const scanner = new QrScanner(
 			videoFeed,
 			async (result: { data: string }) => {
-				scannedResult = result.data;
+				let data = result.data.split("/");
+				let lastValue = data[data.length - 1];
+
+				console.log(lastValue, result.data.split("/"));
+
+				if (lastValue) {
+					scannedResult = lastValue;
+				} else {
+					toast.error("Item not found", {
+						position: "bottom-center"
+					});
+				}
 			},
 			{
 				/* your options or returnDetailedScanResult: true if you're not specifying any other options */

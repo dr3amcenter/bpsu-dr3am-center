@@ -19,7 +19,6 @@ import { and, eq } from "drizzle-orm";
 
 export async function findItemAction(event: RequestEvent) {
 	if (!event.locals.user) redirect(302, "/login");
-	if (event.locals.user.role !== "admin") redirect(302, "/user/inventory");
 
 	const form = await superValidate(event, zod(findItemSchema));
 
