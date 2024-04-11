@@ -109,11 +109,13 @@
 	<Separator class="col-span-10" />
 
 	<div class="col-span-10 space-y-4">
-		<h4 class="col-span-5 tracking-widest">ITEM QR CODE</h4>
-		<QrCode
-			value={`https://bpsu-dr3am-center.vercel.app/inventory/${equipment.id}`}
-			title={equipment.item}
-		/>
+		<h4 class="tracking-widest">ITEM QR CODE</h4>
+		<div class="inline-block">
+			<QrCode
+				value={`https://bpsu-dr3am-center.vercel.app/inventory/${equipment.id}`}
+				title={equipment.item}
+			/>
+		</div>
 	</div>
 
 	{#if $user.role === "admin"}
