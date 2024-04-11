@@ -10,7 +10,6 @@
 	import { getFrequency } from "$lib/utils";
 	import { format } from "date-fns";
 	import ItemDeleteDialog from "./item-delete-dialog.svelte";
-	import { userPrefersMode } from "mode-watcher";
 	import { getUserState } from "$lib/store";
 
 	export let equipment: Equipment;
