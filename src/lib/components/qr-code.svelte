@@ -19,10 +19,10 @@
 	}
 </script>
 
-<div class="flex flex-col items-start">
+<div class="flex">
 	<div
 		bind:this={qrRef}
-		class="relative inline-flex rounded-md border p-1.5 hover:cursor-pointer"
+		class="relative rounded-md border p-1.5 hover:cursor-pointer"
 		on:click={download}
 	>
 		<Qr {value} />
@@ -34,5 +34,4 @@
 			class="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 transform bg-white opacity-70"
 		/>
 	</div>
-	<span class="text-xs">Click to download</span>
 </div>
