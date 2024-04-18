@@ -196,7 +196,11 @@
 			<div class="space-y-5">
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">Low Stock Items</div>
-					<div class="text-lg font-semibold">{lowStockItemTotal}</div>
+					<a
+						href="/admin/inventory?availabilities=Out+of+Stocks"
+						class="text-lg font-semibold text-primary underline underline-offset-4"
+						>{lowStockItemTotal}</a
+					>
 				</div>
 				<Separator class="h-[.5px]" />
 				<div class="flex items-center justify-between">
@@ -257,35 +261,55 @@
 			<div class="space-y-5">
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">Expired Items</div>
-					<div class="text-lg font-semibold">{expiredItemTotal}</div>
+					<a
+						href="/admin/inventory?hasExpired=true"
+						class="text-lg font-semibold text-primary underline underline-offset-4"
+						>{expiredItemTotal}</a
+					>
 				</div>
 
 				<Separator class="h-[.5px]" />
 
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">Expired Item in 30 Days</div>
-					<div class="text-lg font-semibold">{expiredItemIn30DaysTotal}</div>
+					<a
+						href="/admin/inventory?hasExpiredin30D=true"
+						class="text-lg font-semibold text-primary underline underline-offset-4"
+						>{expiredItemIn30DaysTotal}</a
+					>
 				</div>
 
 				<Separator class="h-[.5px]" />
 
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">Expired Item in 6 Months</div>
-					<div class="text-lg font-semibold">{expiredItemIn6MonthsTotal}</div>
+					<a
+						href="/admin/inventory?hasExpiredin6M=true"
+						class="text-lg font-semibold text-primary underline underline-offset-4"
+						>{expiredItemIn6MonthsTotal}</a
+					>
 				</div>
 
 				<Separator class="h-[.5px]" />
 
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">Consumable Items</div>
-					<div class="text-lg font-semibold">{consumableItemTotal}</div>
+					<a
+						href="/admin/inventory?consumabilities=Consumable"
+						class="text-lg font-semibold text-primary underline underline-offset-4"
+						>{consumableItemTotal}</a
+					>
 				</div>
 
 				<Separator class="h-[.5px]" />
 
 				<div class="flex items-center justify-between">
 					<div class="text-xs font-light text-gray-500">For Repair Items</div>
-					<div class="text-lg font-semibold">{forRepairItemTotal}</div>
+					<a
+						href="/admin/inventory?hasExpired=true"
+						class="text-lg font-semibold text-primary underline underline-offset-4"
+						>{forRepairItemTotal}</a
+					>
 				</div>
 			</div>
 		</div>
