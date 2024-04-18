@@ -112,7 +112,7 @@
 		<h4 class="tracking-widest">ITEM QR CODE</h4>
 		<div class="inline-block">
 			<QrCode
-				value={`https://bpsu-dr3am-center.vercel.app/inventory/${equipment.id}`}
+				value={`https://desiegntench-demo.vercel.app/inventory/${equipment.id}`}
 				title={equipment.item}
 			/>
 		</div>

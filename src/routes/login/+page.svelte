@@ -22,7 +22,7 @@
 	<div class="col-span-2 flex h-full w-full flex-col py-8 lg:w-[640px]">
 		<div class="mb-40 hidden items-center gap-x-6 lg:flex">
 			<img src={Dr3amLogo} alt="DR3AM Center Logo" class="w-12" />
-			<h1 class="text-3xl font-bold">BPSU DR3AM Center</h1>
+			<h1 class="text-3xl font-bold">DesIEgnTECH</h1>
 		</div>
 		<div class="flex justify-center lg:hidden">
 			<img src={Dr3amLogoBig} alt="DR3AM Center Logo Big" class="mb-6 w-[300px]" />

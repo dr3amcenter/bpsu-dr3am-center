@@ -15,7 +15,7 @@
 			src: url("/Alexandria-VariableFont_wght.ttf"); /* IE9 Compat Modes */
 		}
 	</style>
-	<title>BPSU DR3AM Center</title>
+	<title>DesIEgnTECH</title>
 </svelte:head>
 
 {#if $navigating}
