@@ -12,8 +12,8 @@ import { addIncomingItemAction, addOutgoingItemAction } from "$lib/server/item";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 import { addIncomingItemSchema, addOutgoingItemSchema } from "$lib/zod-schemas/item.schema";
-import { and, eq, gte, inArray, lt, lte, or } from "drizzle-orm";
-import { isValid } from "date-fns";
+import { and, eq, gte, inArray, isNotNull, lt, lte, or } from "drizzle-orm";
+import { addDays, isValid } from "date-fns";
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) redirect(302, "/login");
@@ -49,6 +49,8 @@ export const load: PageServerLoad = async (event) => {
 	const maintenanceInMonthsEnd = url.searchParams.get("maintenanceInMonthsEnd");
 
 	const hasExpired = Boolean(url.searchParams.get("hasExpired"));
+	const hasExpiredin30D = Boolean(url.searchParams.get("hasExpiredin30D"));
+	const hasExpiredin6M = Boolean(url.searchParams.get("hasExpiredin6M"));
 
 	return {
 		equipments: await db
@@ -119,6 +121,20 @@ export const load: PageServerLoad = async (event) => {
 						: undefined,
 					hasExpired && Boolean(hasExpired)
 						? or(eq(equipmentTable.hasExpired, true), lt(equipmentTable.expiryDate, new Date()))
+						: undefined,
+					hasExpiredin30D && !hasExpired && Boolean(hasExpiredin30D)
+						? and(
+								isNotNull(equipmentTable.expiryDate),
+								gte(equipmentTable.expiryDate, new Date()),
+								lt(equipmentTable.expiryDate, addDays(new Date(), 30))
+							)
+						: undefined,
+					hasExpiredin6M && !hasExpired && Boolean(hasExpiredin6M)
+						? and(
+								isNotNull(equipmentTable.expiryDate),
+								gte(equipmentTable.expiryDate, new Date()),
+								lt(equipmentTable.expiryDate, addDays(new Date(), 180))
+							)
 						: undefined
 				)
 			),

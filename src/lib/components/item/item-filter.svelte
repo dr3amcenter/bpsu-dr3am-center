@@ -64,6 +64,10 @@
 
 	let hasExpired = Boolean($page.url.searchParams.get("hasExpired"));
 
+	let hasExpiredin30D = Boolean($page.url.searchParams.get("hasExpiredin30D"));
+
+	let hasExpiredin6M = Boolean($page.url.searchParams.get("hasExpiredin6M"));
+
 	$: selectedAvailabilities = availabilitiesParams
 		? availabilitiesParams.split(",").map((v) => ({ label: v, value: v }))
 		: undefined;
@@ -173,6 +177,12 @@
 		}
 		if (hasExpired) {
 			params.append("hasExpired", String(hasExpired));
+		}
+		if (hasExpiredin30D) {
+			params.append("hasExpiredin30D", String(hasExpiredin30D));
+		}
+		if (hasExpiredin6M) {
+			params.append("hasExpiredin6M", String(hasExpiredin6M));
 		}
 
 		goto(`${url}?${params}`, { replaceState: true });
@@ -454,11 +464,24 @@
 					</div>
 				</div>
 
-				<div class="col-span-2 flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-					<Checkbox id="hasExpired" bind:checked={hasExpired} />
-					<div class="space-y-1 leading-none">
-						<Label for="hasExpired">Expired Item</Label>
-						<p class="text-sm text-muted-foreground">Item that has expired tags</p>
+				<div class="col-span-2 space-y-2 rounded-md border p-4">
+					<div class="flex flex-row items-start space-x-3">
+						<Checkbox id="hasExpired" bind:checked={hasExpired} />
+						<div class="space-y-1 leading-none">
+							<Label for="hasExpired">Expired Item</Label>
+						</div>
+					</div>
+					<div class="flex flex-row items-start space-x-3">
+						<Checkbox id="hasExpiredin30D" bind:checked={hasExpiredin30D} />
+						<div class="space-y-1 leading-none">
+							<Label for="hasExpiredin30D">Expired Item within 30 Days</Label>
+						</div>
+					</div>
+					<div class="flex flex-row items-start space-x-3">
+						<Checkbox id="hasExpiredin6M" bind:checked={hasExpiredin6M} />
+						<div class="space-y-1 leading-none">
+							<Label for="hasExpiredin6M">Expired Item within 6 months</Label>
+						</div>
 					</div>
 				</div>
 			{:else}
