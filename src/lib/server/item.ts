@@ -121,7 +121,10 @@ export async function createItemAction(event: RequestEvent) {
 			incoming: Number(data.incoming),
 			outgoing: Number(data.outgoing),
 			onHand: Number(data.onHand),
-			availability: data.availability,
+			availability:
+				data.availability === "Available" && Number(data.onHand) === 0
+					? "Out of Stocks"
+					: data.availability,
 			consumability: data.consumability,
 			//OPTIONALS
 			code: data.code,
@@ -177,21 +180,12 @@ export async function addIncomingItemAction(event: RequestEvent) {
 		await db.transaction(async (tx) => {
 			await tx
 				.update(equipmentTable)
-				.set(
-					newOnHand === 0
-						? {
-								onHand: newOnHand,
-								incoming: newIncoming,
-								updatedAt: new Date(),
-								availability: "Out of Stocks"
-							}
-						: {
-								onHand: newOnHand,
-								incoming: newIncoming,
-								availability: "Available",
-								updatedAt: new Date()
-							}
-				)
+				.set({
+					onHand: newOnHand,
+					incoming: newIncoming,
+					availability: "Available",
+					updatedAt: new Date()
+				})
 				.where(eq(equipmentTable.id, id))
 				.execute();
 
@@ -367,7 +361,8 @@ export async function addOutgoingItemAction(event: RequestEvent) {
 				.set({
 					onHand: newOnHand,
 					outgoing: newOutgoing,
-					updatedAt: new Date()
+					updatedAt: new Date(),
+					availability: newOnHand === 0 ? "Out of Stocks" : equipment.availability
 				})
 				.where(eq(equipmentTable.id, id))
 				.execute();
@@ -440,21 +435,12 @@ export async function approveItemAction(event: RequestEvent) {
 		await db.transaction(async (tx) => {
 			await tx
 				.update(equipmentTable)
-				.set(
-					newOnHand === 0
-						? {
-								onHand: newOnHand,
-								outgoing: newOutgoing,
-								updatedAt: new Date(),
-								availability: "Out of Stocks"
-							}
-						: {
-								onHand: newOnHand,
-								outgoing: newOutgoing,
-								availability: "Available",
-								updatedAt: new Date()
-							}
-				)
+				.set({
+					onHand: newOnHand,
+					outgoing: newOutgoing,
+					updatedAt: new Date(),
+					availability: newOnHand === 0 ? "Out of Stocks" : transaction.equipment.availability
+				})
 				.where(eq(equipmentTable.id, transaction.equipment.id))
 				.execute();
 
