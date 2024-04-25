@@ -188,6 +188,7 @@ export async function addIncomingItemAction(event: RequestEvent) {
 						: {
 								onHand: newOnHand,
 								incoming: newIncoming,
+								availability: "Available",
 								updatedAt: new Date()
 							}
 				)
@@ -450,6 +451,7 @@ export async function approveItemAction(event: RequestEvent) {
 						: {
 								onHand: newOnHand,
 								outgoing: newOutgoing,
+								availability: "Available",
 								updatedAt: new Date()
 							}
 				)

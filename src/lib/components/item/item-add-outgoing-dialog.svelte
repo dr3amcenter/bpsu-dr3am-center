@@ -21,6 +21,7 @@
 	export let onHand: number = 0;
 
 	let open = false;
+	let openSure = onHand >= 1 && onHand <= 10;
 
 	const form = superForm(theForm, {
 		validators: zodClient(addOutgoingItemSchema),
@@ -53,38 +54,50 @@
 		<Dialog.Header>
 			<Dialog.Title>New outgoing {equipmentName}</Dialog.Title>
 		</Dialog.Header>
-		<form action="?/addOutgoingItem" method="POST" use:enhance class="space-y-4">
-			<div>
-				On Hand: {onHand}
-			</div>
 
-			<Form.Field {form} name="quantity">
-				<Form.Control let:attrs>
-					<Form.Label>Quantity</Form.Label>
-					<Input {...attrs} type="number" bind:value={$formData.quantity} />
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+		{#if openSure}
+			<div class="space-y-4">
+				<div>Are you sure you want to get this item?</div>
 
-			<Form.Field {form} name="id" class="">
-				<Form.Control let:attrs>
-					<Input {...attrs} type="hidden" bind:value={$formData.id} />
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
-			<Form.Errors errors={$errors._errors} />
-			<div class="grid grid-cols-2 gap-x-2">
-				<Button disabled={$submitting} variant="outline" on:click={() => (open = false)}
-					>Cancel</Button
-				>
-				<Form.Button disabled={$submitting}>
-					{#if $submitting}
-						<LoaderCircleIcon class="h-5 w-5 animate-spin" />
-					{:else}
-						Save
-					{/if}
-				</Form.Button>
+				<div class="grid grid-cols-2 gap-x-2">
+					<Button variant="outline" on:click={() => (open = false)}>No</Button>
+					<Button on:click={() => (openSure = false)}>Yes</Button>
+				</div>
 			</div>
-		</form>
+		{:else}
+			<form action="?/addOutgoingItem" method="POST" use:enhance class="space-y-4">
+				<div>
+					On Hand: {onHand}
+				</div>
+
+				<Form.Field {form} name="quantity">
+					<Form.Control let:attrs>
+						<Form.Label>Quantity</Form.Label>
+						<Input {...attrs} type="number" bind:value={$formData.quantity} />
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+
+				<Form.Field {form} name="id" class="">
+					<Form.Control let:attrs>
+						<Input {...attrs} type="hidden" bind:value={$formData.id} />
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Form.Errors errors={$errors._errors} />
+				<div class="grid grid-cols-2 gap-x-2">
+					<Button disabled={$submitting} variant="outline" on:click={() => (open = false)}
+						>Cancel</Button
+					>
+					<Form.Button disabled={$submitting}>
+						{#if $submitting}
+							<LoaderCircleIcon class="h-5 w-5 animate-spin" />
+						{:else}
+							Save
+						{/if}
+					</Form.Button>
+				</div>
+			</form>
+		{/if}
 	</Dialog.Content>
 </Dialog.Root>

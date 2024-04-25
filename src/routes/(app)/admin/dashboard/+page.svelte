@@ -69,6 +69,10 @@
 	}).length;
 
 	$: lowStockItemTotal = data.items.filter((item) => {
+		return item.onHand >= 1 && item.onHand <= 10;
+	}).length;
+
+	$: outOfStockItemTotal = data.items.filter((item) => {
 		return item.availability === "Out of Stocks" || item.onHand === 0;
 	}).length;
 
@@ -195,9 +199,19 @@
 			<h3>Inventory Details</h3>
 			<div class="space-y-5">
 				<div class="flex items-center justify-between">
-					<div class="text-xs font-light text-gray-500">Low Stock Items</div>
+					<div class="text-xs font-light text-gray-500">Out of Stock Items</div>
 					<a
 						href="/admin/inventory?availabilities=Out+of+Stocks"
+						class="text-lg font-semibold text-primary underline underline-offset-4"
+						>{outOfStockItemTotal}</a
+					>
+				</div>
+				<Separator class="h-[.5px]" />
+
+				<div class="flex items-center justify-between">
+					<div class="text-xs font-light text-gray-500">Low Stock Items</div>
+					<a
+						href="/admin/inventory?onHandStart=1&onHandEnd=10"
 						class="text-lg font-semibold text-primary underline underline-offset-4"
 						>{lowStockItemTotal}</a
 					>
