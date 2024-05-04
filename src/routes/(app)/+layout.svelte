@@ -88,12 +88,11 @@
 				<div class="text-center text-xs text-gray-300">
 					Inventory's data is based on information collected starting from April 4, 2024.
 				</div>
-				<div class="text-center text-xs text-gray-300">
-					© 2024 <a
-						href="https://github.com/pasokoner"
-						target="_blank"
-						class="text-primary/40 underline">John Carlo Asilo</a
-					>
+				<div class="text-center text-[10px] text-gray-300">
+					© 2024 <div class="text-primary/40 underline">
+						Jacob Victor L. Mendiola, Roxette Anne S. Jaring, Jeannele A. Tolentino, Jose Angelito
+						D. Tolentino, John Carlo Q. Zaide, Kurt Allen S. Cristobal, Sean D.S Sumandal
+					</div>
 				</div>
 			</div>
 		</div>

@@ -21,6 +21,7 @@ export const lucia = new Lucia(adapter, {
 			role: attributes.role,
 			fullName: attributes.fullName,
 			createdAt: attributes.createdAt,
+			updatedAt: attributes.updatedAt,
 			isDeleted: attributes.isDeleted
 		};
 	}
@@ -37,6 +38,7 @@ interface DatabaseUserAttributes {
 	username: string;
 	role: Roles;
 	fullName: string;
+	updatedAt: Date;
 	createdAt: Date;
 	isDeleted: boolean;
 }

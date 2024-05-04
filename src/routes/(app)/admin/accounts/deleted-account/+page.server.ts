@@ -15,6 +15,7 @@ export const load: PageServerLoad = async (event) => {
 					username: true,
 					fullName: true,
 					createdAt: true,
+					updatedAt: true,
 					id: true,
 					role: true,
 					isDeleted: true

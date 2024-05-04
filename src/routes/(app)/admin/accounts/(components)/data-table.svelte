@@ -33,8 +33,8 @@
 			header: "Username"
 		}),
 		table.column({
-			accessor: "createdAt",
-			header: "Created At",
+			accessor: "updatedAt",
+			header: "Deleted At",
 			cell: ({ value }) => {
 				const formatted = format(value, "MM-dd-yyyy");
 				return formatted;
