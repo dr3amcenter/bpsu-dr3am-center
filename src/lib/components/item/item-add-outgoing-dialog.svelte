@@ -57,7 +57,7 @@
 
 		{#if openSure}
 			<div class="space-y-4">
-				<div>Are you sure you want to get this item?</div>
+				<div>Are you sure you want to get this item? This item is included in low stock items.</div>
 
 				<div class="grid grid-cols-2 gap-x-2">
 					<Button variant="outline" on:click={() => (open = false)}>No</Button>
@@ -67,7 +67,10 @@
 		{:else}
 			<form action="?/addOutgoingItem" method="POST" use:enhance class="space-y-4">
 				<div>
-					On Hand: {onHand}
+					On Hand: <span class={cn(onHand < 10 ? "text-red-500" : "")}>{onHand}</span>
+					{#if onHand < 10}
+						<div class="text-sm text-red-500">This item is included in low stock items</div>
+					{/if}
 				</div>
 
 				<Form.Field {form} name="quantity">
