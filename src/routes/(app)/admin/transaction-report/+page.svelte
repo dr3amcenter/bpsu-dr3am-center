@@ -6,17 +6,13 @@
 	import { format } from "date-fns";
 	import DateRangePicker from "$lib/components/date-range-picker.svelte";
 	import type { DateRange } from "bits-ui";
-	import { DateFormatter } from "@internationalized/date";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
 
 	export let data;
 
-	const df = new DateFormatter("en-US", {
-		dateStyle: "medium"
-	});
-
 	let value: DateRange | undefined;
+	let mounted = false;
 
 	$: exportData = data.transactions.map((t) => {
 		const { equipment } = t;
@@ -34,15 +30,17 @@
 
 	$: {
 		if (value) {
-			if (value.start && value.end) {
-				const url = $page.url.pathname;
-				const params = new URLSearchParams();
-
+			const url = $page.url.pathname;
+			const params = new URLSearchParams();
+			if (value.start) {
 				params.append("startDate", value.start.toString());
-				params.append("endDate", value.end.toString());
-
-				goto(`${url}?${params}`, { replaceState: true });
 			}
+
+			if (value.end) {
+				params.append("endDate", value.end.toString());
+			}
+
+			goto(`${url}?${params}`, { replaceState: true });
 		}
 	}
 </script>
