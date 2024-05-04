@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DataTable from "../(components)/data-table.svelte";
+	import DataTable from "../(components)/data-table-deleted-account.svelte";
 	import { Input } from "$lib/components/ui/input";
 
 	export let data;

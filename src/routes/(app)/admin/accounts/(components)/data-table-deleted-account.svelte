@@ -1,59 +1,60 @@
 <script lang="ts">
 	import { createRender, createTable, Render, Subscribe } from "svelte-headless-table";
-	import { addPagination } from "svelte-headless-table/plugins";
-	import { readable, writable } from "svelte/store";
+	import { addPagination, addTableFilter } from "svelte-headless-table/plugins";
+	import { writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
-	import Button from "$lib/components/ui/button/button.svelte";
-
-	import type { TransactionWithRelations } from "$lib/server/db/schema";
 	import { format } from "date-fns";
-	import RequestDataTableActions from "./request-data-table-actions.svelte";
+	import DataTableActions from "./data-table-actions.svelte";
+	import Button from "$lib/components/ui/button/button.svelte";
+	import type { User } from "lucia";
 
-	export let data: TransactionWithRelations[] = [];
-	export let hidePagination = false;
+	export let data: User[] = [];
 
-	const transactions = writable(data);
+	export let searchInput = "";
 
-	$: $transactions = data;
+	const users = writable(data);
 
-	const table = createTable(transactions, {
-		page: addPagination()
+	$: $users = data;
+
+	const table = createTable(users, {
+		page: addPagination(),
+		filter: addTableFilter({
+			fn: ({ filterValue, value }) => value.toLowerCase().includes(filterValue.toLowerCase())
+		})
 	});
 
 	const columns = table.createColumns([
 		table.column({
-			accessor: "equipment",
-			header: "Item",
-			cell: ({ value }) => {
-				return value.item;
-			}
+			accessor: "fullName",
+			header: "Full Name"
 		}),
 		table.column({
-			accessor: "quantity",
-			header: "Quantity"
-		}),
-		table.column({
-			accessor: "requester",
-			header: "Requester",
-			cell: ({ value }) => {
-				return value.fullName;
-			}
+			accessor: "username",
+			header: "Username"
 		}),
 		table.column({
 			accessor: "updatedAt",
-			header: "Date",
+			header: "Deleted At",
 			cell: ({ value }) => {
 				const formatted = format(value, "MM-dd-yyyy - hh:mm a");
 				return formatted;
+			},
+			plugins: {
+				filter: {
+					exclude: true
+				}
 			}
 		}),
 		table.column({
-			accessor: (transactionValue) => transactionValue,
+			accessor: (userValue) => userValue,
 			header: "",
 			cell: ({ value }) => {
-				return createRender(RequestDataTableActions, {
-					id: value.id
-				});
+				return createRender(DataTableActions, { user: value });
+			},
+			plugins: {
+				filter: {
+					exclude: true
+				}
 			}
 		})
 	]);
@@ -61,6 +62,9 @@
 	const { headerRows, pageRows, tableAttrs, tableBodyAttrs, pluginStates } =
 		table.createViewModel(columns);
 	const { pageIndex, hasNextPage, hasPreviousPage } = pluginStates.page;
+	const { filterValue } = pluginStates.filter;
+
+	$: $filterValue = searchInput;
 </script>
 
 <div>
@@ -71,7 +75,7 @@
 					<Table.Row class="border-none">
 						{#each headerRow.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
-								<Table.Head {...attrs} class="text-primary">
+								<Table.Head {...attrs}>
 									<Render of={cell.render()} />
 								</Table.Head>
 							</Subscribe>
@@ -86,7 +90,7 @@
 					<Table.Row {...rowAttrs}>
 						{#each row.cells as cell (cell.id)}
 							<Subscribe attrs={cell.attrs()} let:attrs>
-								<Table.Cell {...attrs} class="py-6">
+								<Table.Cell {...attrs}>
 									<Render of={cell.render()} />
 								</Table.Cell>
 							</Subscribe>
@@ -101,20 +105,18 @@
 		<div class="flex h-20 items-center justify-center">No data</div>
 	{/if}
 
-	{#if !hidePagination}
-		<div class="flex items-center justify-end space-x-4 py-4">
-			<Button
-				variant="outline"
-				size="sm"
-				on:click={() => ($pageIndex = $pageIndex - 1)}
-				disabled={!$hasPreviousPage}>Previous</Button
-			>
-			<Button
-				variant="outline"
-				size="sm"
-				disabled={!$hasNextPage}
-				on:click={() => ($pageIndex = $pageIndex + 1)}>Next</Button
-			>
-		</div>
-	{/if}
+	<div class="flex items-center justify-end space-x-4 py-4">
+		<Button
+			variant="outline"
+			size="sm"
+			on:click={() => ($pageIndex = $pageIndex - 1)}
+			disabled={!$hasPreviousPage}>Previous</Button
+		>
+		<Button
+			variant="outline"
+			size="sm"
+			disabled={!$hasNextPage}
+			on:click={() => ($pageIndex = $pageIndex + 1)}>Next</Button
+		>
+	</div>
 </div>

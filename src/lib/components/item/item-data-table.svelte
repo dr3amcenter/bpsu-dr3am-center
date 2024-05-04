@@ -95,7 +95,7 @@
 			header: "Acquired Date",
 			cell: ({ value }) => {
 				if (!value) return "";
-				const formatted = format(value, "MM-dd-yyyy");
+				const formatted = format(value, "MM-dd-yyyy - hh:mm a");
 				return formatted;
 			},
 			plugins: {
@@ -109,7 +109,7 @@
 			header: "Expiry Date",
 			cell: ({ value }) => {
 				if (!value) return "";
-				const formatted = format(value, "MM-dd-yyyy");
+				const formatted = format(value, "MM-dd-yyyy - hh:mm a");
 				return formatted;
 			},
 			plugins: {
@@ -201,7 +201,7 @@
 			accessor: "updatedAt",
 			header: "Last updated",
 			cell: ({ value }) => {
-				const formatted = format(value, "MM-dd-yyyy");
+				const formatted = format(value, "MM-dd-yyyy - hh:mm a");
 				return formatted;
 			},
 			plugins: {

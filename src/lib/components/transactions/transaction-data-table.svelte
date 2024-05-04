@@ -62,7 +62,7 @@
 			accessor: "updatedAt",
 			header: "Date",
 			cell: ({ value }) => {
-				const formatted = format(value, "MM-dd-yyyy");
+				const formatted = format(value, "MM-dd-yyyy - hh:mm a");
 				return formatted;
 			}
 		})

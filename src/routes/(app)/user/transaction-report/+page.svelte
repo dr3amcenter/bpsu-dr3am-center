@@ -28,7 +28,7 @@
 			status: t.status,
 			requester: t.requester.fullName,
 			approver: t.approver?.fullName,
-			date: format(t.updatedAt, "MM-dd-yyyy")
+			date: format(t.updatedAt, "MM-dd-yyyy - hh:mm a")
 		};
 	});
 

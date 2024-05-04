@@ -115,7 +115,7 @@
 	$: $formData.brand = equipment.brand || undefined;
 	$: $formData.classification = equipment.classification || undefined;
 	$: $formData.dateAcquired = equipment.dateAcquired
-		? format(equipment.dateAcquired, "yyyy-MM-dd")
+		? format(equipment.dateAcquired, "MM-dd-yyyy - hh:mm a")
 		: "0";
 	$: $formData.acquisitionCost = equipment.acquisitionCost || "0";
 	$: $formData.maintenanceInMonths = String(equipment.maintenanceInMonths) || "0";
