@@ -66,7 +66,9 @@
 			class="flex flex-col-reverse justify-end gap-x-3 gap-y-2 sm:flex-row sm:items-center sm:justify-between"
 		>
 			<div class="flex flex-1 items-center gap-x-2">
-				<DateRangePicker bind:value />
+				<div class="flex-1">
+					<DateRangePicker bind:value />
+				</div>
 				<Button variant="link" class="underline" on:click={clearFilter}>Clear</Button>
 			</div>
 
