@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createRender, createTable, Render, Subscribe } from "svelte-headless-table";
-	import { addPagination } from "svelte-headless-table/plugins";
+	import { addPagination, addSortBy } from "svelte-headless-table/plugins";
 	import { writable } from "svelte/store";
+	import ArrowUpDown from "lucide-svelte/icons/arrow-up-down";
 	import * as Table from "$lib/components/ui/table";
 	import Button from "$lib/components/ui/button/button.svelte";
 
@@ -18,7 +19,8 @@
 	$: $transactions = data;
 
 	const table = createTable(transactions, {
-		page: addPagination()
+		page: addPagination(),
+		sort: addSortBy()
 	});
 
 	const columns = table.createColumns([
@@ -27,11 +29,21 @@
 			header: "Item",
 			cell: ({ value }) => {
 				return value.item;
+			},
+			plugins: {
+				sort: {
+					disable: true
+				}
 			}
 		}),
 		table.column({
 			accessor: "type",
-			header: "Type"
+			header: "Type",
+			plugins: {
+				sort: {
+					disable: true
+				}
+			}
 		}),
 		table.column({
 			accessor: "quantity",
@@ -42,6 +54,11 @@
 			header: "Status",
 			cell: ({ value }) => {
 				return createRender(TransactionStatus, { status: value });
+			},
+			plugins: {
+				sort: {
+					disable: true
+				}
 			}
 		}),
 		table.column({
@@ -49,6 +66,11 @@
 			header: "Requester",
 			cell: ({ value }) => {
 				return value.fullName;
+			},
+			plugins: {
+				sort: {
+					disable: true
+				}
 			}
 		}),
 		table.column({
@@ -56,6 +78,11 @@
 			header: "Approver",
 			cell: ({ value }) => {
 				return value?.fullName ? value.fullName : "";
+			},
+			plugins: {
+				sort: {
+					disable: true
+				}
 			}
 		}),
 		table.column({
@@ -80,9 +107,16 @@
 				<Subscribe rowAttrs={headerRow.attrs()}>
 					<Table.Row class="border-none">
 						{#each headerRow.cells as cell (cell.id)}
-							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
+							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
 								<Table.Head {...attrs} class="text-primary">
-									<Render of={cell.render()} />
+									{#if cell.id === "quantity" || cell.id === "updatedAt"}
+										<Button variant="ghost" on:click={props.sort.toggle}>
+											<Render of={cell.render()} />
+											<ArrowUpDown class={"ml-2 h-4 w-4"} />
+										</Button>
+									{:else}
+										<Render of={cell.render()} />
+									{/if}
 								</Table.Head>
 							</Subscribe>
 						{/each}

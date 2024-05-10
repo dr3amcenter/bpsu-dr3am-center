@@ -8,11 +8,11 @@
 	import type { DateRange } from "bits-ui";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
+	import Button from "$lib/components/ui/button/button.svelte";
 
 	export let data;
 
 	let value: DateRange | undefined;
-	let mounted = false;
 
 	$: exportData = data.transactions.map((t) => {
 		const { equipment } = t;
@@ -43,6 +43,14 @@
 			goto(`${url}?${params}`, { replaceState: true });
 		}
 	}
+
+	function clearFilter() {
+		value = undefined;
+		const params = new URLSearchParams();
+		const url = $page.url.pathname;
+
+		goto(`${url}?${params}`, { replaceState: true });
+	}
 </script>
 
 <Title title="Transaction Report" />
@@ -52,8 +60,9 @@
 		<div
 			class="flex flex-col-reverse justify-end gap-x-3 gap-y-2 sm:flex-row sm:items-center sm:justify-between"
 		>
-			<div class="flex-1">
+			<div class="flex flex-1 items-center gap-x-2">
 				<DateRangePicker bind:value />
+				<Button variant="link" class="underline" on:click={clearFilter}>Clear</Button>
 			</div>
 
 			<div class="flex">

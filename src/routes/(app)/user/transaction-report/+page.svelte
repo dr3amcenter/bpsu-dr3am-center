@@ -9,6 +9,7 @@
 	import { DateFormatter } from "@internationalized/date";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
+	import Button from "$lib/components/ui/button/button.svelte";
 
 	export let data;
 
@@ -34,16 +35,26 @@
 
 	$: {
 		if (value) {
-			if (value.start && value.end) {
-				const url = $page.url.pathname;
-				const params = new URLSearchParams();
-
+			const url = $page.url.pathname;
+			const params = new URLSearchParams();
+			if (value.start) {
 				params.append("startDate", value.start.toString());
-				params.append("endDate", value.end.toString());
-
-				goto(`${url}?${params}`, { replaceState: true });
 			}
+
+			if (value.end) {
+				params.append("endDate", value.end.toString());
+			}
+
+			goto(`${url}?${params}`, { replaceState: true });
 		}
+	}
+
+	function clearFilter() {
+		value = undefined;
+		const params = new URLSearchParams();
+		const url = $page.url.pathname;
+
+		goto(`${url}?${params}`, { replaceState: true });
 	}
 </script>
 
@@ -54,8 +65,9 @@
 		<div
 			class="flex flex-col-reverse justify-end gap-x-3 gap-y-2 sm:flex-row sm:items-center sm:justify-between"
 		>
-			<div class="flex-1">
+			<div class="flex flex-1 items-center gap-x-2">
 				<DateRangePicker bind:value />
+				<Button variant="link" class="underline" on:click={clearFilter}>Clear</Button>
 			</div>
 
 			<div class="flex">

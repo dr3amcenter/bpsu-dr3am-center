@@ -12,7 +12,7 @@ import { addIncomingItemAction, addOutgoingItemAction } from "$lib/server/item";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 import { addIncomingItemSchema, addOutgoingItemSchema } from "$lib/zod-schemas/item.schema";
-import { and, eq, gte, inArray, isNotNull, lt, lte, or } from "drizzle-orm";
+import { and, eq, getTableColumns, gte, inArray, isNotNull, lt, lte, or, sql } from "drizzle-orm";
 import { addDays, isValid } from "date-fns";
 
 export const load: PageServerLoad = async (event) => {
@@ -54,7 +54,10 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		equipments: await db
-			.select()
+			.select({
+				...getTableColumns(equipmentTable),
+				item: sql<string>`upper(${equipmentTable.item})`
+			})
 			.from(equipmentTable)
 			.where(
 				and(

@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { createRender, createTable, Render, Subscribe } from "svelte-headless-table";
-	import { addPagination, addTableFilter, addHiddenColumns } from "svelte-headless-table/plugins";
+	import {
+		addPagination,
+		addTableFilter,
+		addHiddenColumns,
+		addSortBy
+	} from "svelte-headless-table/plugins";
 	import { writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
 	import ItemDataTableActions from "./item-data-table-actions.svelte";
@@ -12,7 +17,7 @@
 	import OnHand from "$lib/components/onHand.svelte";
 	import type { Equipment } from "$lib/server/db/schema";
 	import { format } from "date-fns";
-	import { ChevronDownIcon } from "lucide-svelte";
+	import { ChevronDownIcon, ArrowUpDown } from "lucide-svelte";
 	import { getFrequency } from "$lib/utils";
 
 	export let searchInput = "";
@@ -28,6 +33,7 @@
 		filter: addTableFilter({
 			fn: ({ filterValue, value }) => value.toLowerCase().includes(filterValue.toLowerCase())
 		}),
+		sort: addSortBy(),
 		hide: addHiddenColumns()
 	});
 
@@ -223,6 +229,9 @@
 			plugins: {
 				filter: {
 					exclude: true
+				},
+				sort: {
+					disable: true
 				}
 			}
 		})
@@ -292,9 +301,16 @@
 				<Subscribe rowAttrs={headerRow.attrs()}>
 					<Table.Row class="border-none">
 						{#each headerRow.cells as cell (cell.id)}
-							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
+							<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
 								<Table.Head {...attrs} class="text-primary">
-									<Render of={cell.render()} />
+									{#if cell.id === ""}
+										<Render of={cell.render()} />
+									{:else}
+										<Button variant="ghost" on:click={props.sort.toggle}>
+											<Render of={cell.render()} />
+											<ArrowUpDown class={"ml-2 h-4 w-4"} />
+										</Button>
+									{/if}
 								</Table.Head>
 							</Subscribe>
 						{/each}
