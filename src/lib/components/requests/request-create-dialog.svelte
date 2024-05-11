@@ -75,7 +75,7 @@
 				</div>
 			</div>
 		{:else}
-			<form action="?/addOutgoingItem" method="POST" use:enhance class="space-y-4">
+			<form action="?/createRequestItem" method="POST" use:enhance class="space-y-4">
 				<div>
 					On Hand: <span class={cn(onHand < 10 ? "text-red-500" : "")}>{onHand}</span>
 					{#if onHand < 10}
