@@ -20,7 +20,7 @@
 
 {#if $navigating}
 	<div class="fixed inset-0 z-[999] flex items-center justify-center bg-black/80">
-		<img src="/favicon.png" class="w-24 animate-pulse" alt="BPSU Dr3am Center Logo" />
+		<img src="/favicon.png" class="w-24 animate-pulse" alt="SeQuR IEnventory System Logo" />
 	</div>
 {/if}
 

@@ -21,11 +21,11 @@
 <main class="container flex h-screen flex-col items-center">
 	<div class="col-span-2 flex h-full w-full flex-col py-8 lg:w-[640px]">
 		<div class="mb-40 hidden items-center gap-x-6 lg:flex">
-			<img src={Dr3amLogo} alt="DR3AM Center Logo" class="w-12" />
-			<h1 class="text-3xl font-bold">BPSU DR3AM Center</h1>
+			<img src={Dr3amLogo} alt="SeQuR IEnventory System Logo" class="w-12" />
+			<h1 class="text-3xl font-bold">SeQuR IEnventory System</h1>
 		</div>
 		<div class="flex justify-center lg:hidden">
-			<img src={Dr3amLogoBig} alt="DR3AM Center Logo Big" class="mb-6 w-[300px]" />
+			<img src={Dr3amLogoBig} alt="SeQuR IEnventory System Logo Big" class="mb-6 w-[300px]" />
 		</div>
 		<div class="space-y-6">
 			<h2 class="text-2xl font-bold">Login.</h2>

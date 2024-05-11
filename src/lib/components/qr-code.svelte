@@ -34,7 +34,7 @@
 	<Qr {value} />
 	<img
 		src={Dr3amLogo}
-		alt="BPSU Dr3am Center Logo"
+		alt="SeQuR IEnventory System Logo"
 		class="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 transform bg-white opacity-70"
 	/>
 </div>

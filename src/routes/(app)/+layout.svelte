@@ -51,7 +51,7 @@
 			</Button>
 
 			<div class="mb-12 flex justify-center">
-				<img src={Dr3amCenterLogoBig} alt="DR3AM Center Logo Big" class="w-40" />
+				<img src={Dr3amCenterLogoBig} alt="SeQuR IEnventory System Logo Big" class="w-40" />
 			</div>
 
 			<ScrollArea class="flex-1">
@@ -101,7 +101,7 @@
 	<header
 		class="fixed flex h-20 w-full items-center justify-between bg-white px-6 py-4 md:ml-64 md:hidden xl:px-4"
 	>
-		<img src={Dr3amLogo} alt="DR3AM Center Logo" class="w-12" />
+		<img src={Dr3amLogo} alt="SeQuR IEnventory System Logo" class="w-12" />
 
 		<Button variant="ghost" class="sm:hidden" on:click={() => (sidebarOpen = !sidebarOpen)}>
 			<MenuIcon />

@@ -10,7 +10,7 @@
 		<div class="ml-auto">
 			<img
 				src={Dr3amLogoWhite}
-				alt="DR3AM Center Logo White"
+				alt="SeQuR IEnventory System Logo White"
 				class="h-[45px] w-[45px] sm:h-[60px] sm:w-[60px]"
 			/>
 		</div>
