@@ -51,7 +51,7 @@ export const links: Record<
 		}
 	],
 	user: [
-		{ href: "/user/inventory", label: "Invetory", icon: WarehouseIcon },
+		{ href: "/user/inventory", label: "Inventory", icon: WarehouseIcon },
 		{ href: "/user/request", label: "Request", icon: ScrollTextIcon },
 		{ href: "/user/transaction-report", label: "Transaction Report", icon: TriangleAlertIcon }
 	]
